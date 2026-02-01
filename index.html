@@ -10,100 +10,89 @@
 
 body{
   margin:0;
-  min-height:200vh; /* allow scroll after unlock */
+  height:100vh;
+  overflow:hidden;
   font-family:-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif;
-  background:#000;
-  color:#fff;
-  overflow:hidden; /* LOCKED INITIALLY */
+  background:#0b0d12;
+  color:#f5f5f5;
 }
 
-/* ===== CINEMATIC BACKGROUND ===== */
+/* ===== KOREAN CINEMATIC BACKGROUND ===== */
 .scene{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(1200px 800px at 20% 30%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(900px 700px at 80% 70%, rgba(255,255,255,.06), transparent 65%),
-    linear-gradient(120deg,#050505,#0b0b0b,#050505);
-  animation:breath 26s ease-in-out infinite alternate;
+    radial-gradient(800px 600px at 20% 30%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(700px 500px at 80% 70%, rgba(255,180,200,.06), transparent 65%),
+    linear-gradient(180deg,#0b0d12,#141824,#0b0d12);
+  animation:nightBreath 30s ease-in-out infinite alternate;
 }
 
-@keyframes breath{
-  from{transform:scale(1) translateY(0);}
-  to{transform:scale(1.05) translateY(-30px);}
+@keyframes nightBreath{
+  from{transform:scale(1);}
+  to{transform:scale(1.04);}
 }
 
-/* grain */
+/* soft rain light grain */
 .scene::after{
   content:"";
   position:absolute;
   inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   pointer-events:none;
 }
 
-/* vignette */
-.vignette{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.85));
-}
-
-/* ===== CONTENT ===== */
+/* ===== CONTENT FRAME ===== */
 .frame{
   position:relative;
   z-index:2;
-  height:100vh;
+  height:100%;
   display:flex;
   align-items:center;
+  justify-content:center;
   padding:0 10%;
 }
 
 .copy{
-  max-width:520px;
+  max-width:560px;
 }
 
+/* text animation */
 .line{
-  font-size:clamp(26px,4vw,44px);
-  line-height:1.3;
+  font-size:clamp(24px,4vw,40px);
+  line-height:1.4;
   font-weight:400;
-  margin-bottom:34px;
+  margin-bottom:28px;
   opacity:0;
   transform:translateY(20px);
-  animation:fadeUp 1.6s ease forwards;
+  animation:fadeLine 1.6s ease forwards;
 }
 
-.line:nth-child(1){animation-delay:1s}
-.line:nth-child(2){animation-delay:4s}
-.line:nth-child(3){animation-delay:7s}
-.line:nth-child(4){animation-delay:10s}
-.line:nth-child(5){animation-delay:13s}
-.line:nth-child(6){animation-delay:16s}
+/* timing — like a drama scene */
+.line:nth-child(1){animation-delay:2s}
+.line:nth-child(2){animation-delay:6s}
+.line:nth-child(3){animation-delay:10s}
+.line:nth-child(4){animation-delay:14s}
+.line:nth-child(5){animation-delay:18s}
+.line:nth-child(6){animation-delay:22s}
+.line:nth-child(7){animation-delay:26s}
 
-@keyframes fadeUp{
+@keyframes fadeLine{
   to{opacity:1;transform:translateY(0);}
 }
 
+/* final emphasis */
 .final{
   font-weight:500;
-  margin-top:40px;
+  margin-top:36px;
 }
 
+/* signature */
 .signature{
+  margin-top:48px;
   font-size:14px;
   letter-spacing:1px;
-  opacity:.7;
-  margin-top:60px;
-}
-
-/* ===== SCROLL SECTION (AFTER UNLOCK) ===== */
-.scroll-area{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-  color:#aaa;
+  opacity:.65;
 }
 </style>
 </head>
@@ -111,33 +100,22 @@ body{
 <body>
 
 <div class="scene"></div>
-<div class="vignette"></div>
 
-<!-- CINEMATIC SECTION -->
 <div class="frame">
   <div class="copy">
-    <div class="line">Some things don’t arrive loudly.</div>
-    <div class="line">They settle in quietly.</div>
-    <div class="line">And suddenly, nothing feels the same.</div>
-    <div class="line">You didn’t change my life overnight.</div>
-    <div class="line">You changed it slowly.</div>
+    <div class="line">Some people come into your life</div>
+    <div class="line">without asking for space.</div>
+    <div class="line">They just stay.</div>
 
-    <div class="line final">Will you be my wife?</div>
+    <div class="line">With you,</div>
+    <div class="line">even ordinary moments felt like scenes</div>
+    <div class="line">I wanted to remember.</div>
+
+    <div class="line final">If this were a story,<br>you would be the ending I choose.</div>
+
     <div class="signature">— Abhiram</div>
   </div>
 </div>
-
-<!-- SCROLL CONTINUATION -->
-<div class="scroll-area">
-  (Just breathe. This moment is yours.)
-</div>
-
-<script>
-/* ===== UNLOCK SCROLL AFTER FINAL LINE ===== */
-setTimeout(() => {
-  document.body.style.overflow = "auto";
-}, 18000); // unlocks right after last animation
-</script>
 
 </body>
 </html>
