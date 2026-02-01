@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8">
 <title>For Tejashwini</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -19,45 +16,42 @@ body{
   height:100vh;
   overflow:hidden;
   background:#000;
-  color:#f6f6f6;
   font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color:#f6f6f6;
 }
 
-/* ===== CINEMATIC BACKGROUND (FIXED FRAMING) ===== */
-.scene{
+/* ===== IMAGE STAGE (NO CROPPING EVER) ===== */
+.stage{
   position:fixed;
   inset:0;
-  background:
-    linear-gradient(
-      rgba(0,0,0,0.45),
-      rgba(0,0,0,0.75)
-    ),
-    url("background.jpg") no-repeat;
-  background-size:cover;
-  background-position:center 65%; /* 👈 keeps faces visible */
+  overflow:hidden;
+}
+
+/* blurred background fill */
+.stage::before{
+  content:"";
+  position:absolute;
+  inset:-10%;
+  background:url("background.jpg") center/cover no-repeat;
+  filter:blur(40px) brightness(0.6);
+  transform:scale(1.2);
+}
+
+/* actual image (never cropped) */
+.stage img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain; /* 🔥 THIS IS THE FIX */
+  object-position:center;
   animation:slowZoom 28s ease-in-out infinite alternate;
 }
 
-/* extra safety for tall mobile screens */
-@media (max-aspect-ratio: 3/4){
-  .scene{
-    background-position:center 70%;
-  }
-}
-
-/* slow cinematic zoom */
+/* cinematic zoom (safe with contain) */
 @keyframes slowZoom{
   from{transform:scale(1);}
-  to{transform:scale(1.05);}
-}
-
-/* subtle film grain */
-.scene::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;
+  to{transform:scale(1.04);}
 }
 
 /* vignette */
@@ -65,6 +59,7 @@ body{
   position:fixed;
   inset:0;
   background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.85));
+  pointer-events:none;
 }
 
 /* ===== CONTENT ===== */
@@ -98,7 +93,6 @@ body{
   animation:fadeCycle 5.2s ease forwards;
 }
 
-/* fade in → stay → fade out */
 @keyframes fadeCycle{
   0%{opacity:0;transform:translateY(18px)}
   20%{opacity:1;transform:translateY(0)}
@@ -106,7 +100,6 @@ body{
   100%{opacity:0;transform:translateY(-12px)}
 }
 
-/* final line emphasis */
 .final{
   font-style:italic;
   letter-spacing:0.05em;
@@ -116,15 +109,18 @@ body{
 
 <body>
 
-<div class="scene"></div>
+<!-- IMAGE LAYER -->
+<div class="stage">
+  <img src="background.jpg" alt="Us">
+</div>
 <div class="vignette"></div>
 
+<!-- TEXT -->
 <div class="frame">
   <div class="line" id="line"></div>
 </div>
 
 <script>
-/* ===== KOREAN ROMANTIC STORY ===== */
 const lines = [
   "Some people enter your life quietly.",
   "They don’t ask for attention.",
@@ -155,155 +151,6 @@ function showNext(){
   setTimeout(showNext, duration);
 }
 
-/* autoplay like a movie intro */
-setTimeout(showNext, 1400);
-</script>
-
-</body>
-</html>
-
-<title>For Tejashwini</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-<!-- Cinematic Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-
-<style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  height:100vh;
-  overflow:hidden;
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  background:#000;
-  color:#f6f6f6;
-}
-
-/* ===== BACKGROUND IMAGE (YOUR PHOTO) ===== */
-.scene{
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(
-      rgba(0,0,0,0.55),
-      rgba(0,0,0,0.75)
-    ),
-    url("background.jpg") center/cover no-repeat;
-  animation:slowZoom 28s ease-in-out infinite alternate;
-}
-
-/* slow cinematic zoom */
-@keyframes slowZoom{
-  from{transform:scale(1);}
-  to{transform:scale(1.06);}
-}
-
-/* film grain */
-.scene::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;
-}
-
-/* vignette */
-.vignette{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.85));
-}
-
-/* ===== CONTENT ===== */
-.frame{
-  position:relative;
-  z-index:2;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0 12%;
-  text-align:center;
-}
-
-/* ===== CINEMATIC TEXT ===== */
-.line{
-  position:absolute;
-  max-width:760px;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(26px,4vw,44px);
-  line-height:1.55;
-  letter-spacing:0.02em;
-  font-weight:400;
-  opacity:0;
-  color:#f8f8f8;
-
-  text-shadow:
-    0 12px 40px rgba(0,0,0,.6),
-    0 0 12px rgba(255,255,255,.08);
-
-  animation:fadeCycle 5.2s ease forwards;
-}
-
-/* fade in → read → fade out */
-@keyframes fadeCycle{
-  0%{opacity:0;transform:translateY(18px)}
-  20%{opacity:1;transform:translateY(0)}
-  70%{opacity:1}
-  100%{opacity:0;transform:translateY(-12px)}
-}
-
-/* final line */
-.final{
-  font-style:italic;
-  letter-spacing:0.05em;
-}
-</style>
-</head>
-
-<body>
-
-<div class="scene"></div>
-<div class="vignette"></div>
-
-<div class="frame">
-  <div class="line" id="line"></div>
-</div>
-
-<script>
-/* ===== ROMANTIC STORY ===== */
-const lines = [
-  "Some people enter your life quietly.",
-  "They don’t ask for attention.",
-  "They don’t try to impress.",
-  "They simply stay.",
-  "With you, time felt softer.",
-  "Crowded places felt calmer.",
-  "Even chaos felt warm.",
-  "If this were a movie,",
-  "you would be my favourite scene.",
-  "And the ending I choose."
-];
-
-let index = 0;
-const el = document.getElementById("line");
-const duration = 5200; // must match animation
-
-function showNext(){
-  if(index >= lines.length) return;
-
-  el.textContent = lines[index];
-  el.className = "line" + (index === lines.length - 1 ? " final" : "");
-  el.style.animation = "none";
-  void el.offsetWidth; // reset animation
-  el.style.animation = `fadeCycle ${duration}ms ease forwards`;
-
-  index++;
-  setTimeout(showNext, duration);
-}
-
-/* auto play like a movie intro */
 setTimeout(showNext, 1400);
 </script>
 
