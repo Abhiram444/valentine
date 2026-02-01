@@ -2,80 +2,85 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Tejashwini ❤️</title>
+<title>For Tejashwini</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <style>
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
+
+:root{
+  --bg:#f7f7f7;
+  --card:#ffffff;
+  --text:#1a1a1a;
+  --muted:#8a8a8a;
+  --accent:#e85d75;
+}
+
 body{
   margin:0;
   height:100vh;
   display:flex;
-  justify-content:center;
   align-items:center;
-  background:linear-gradient(120deg,#f6d365,#fda085,#fbc2eb,#a6c1ee);
-  background-size:400% 400%;
-  animation:bg 20s ease infinite;
-  font-family:-apple-system,BlinkMacSystemFont,"Poppins",sans-serif;
+  justify-content:center;
+  background:var(--bg);
+  font-family:-apple-system,BlinkMacSystemFont,"Inter","Poppins",sans-serif;
+  -webkit-font-smoothing:antialiased;
   overflow:hidden;
 }
-@keyframes bg{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
 
-/* soft floating glow */
-.glow{
+/* subtle ambient gradient */
+body::before{
+  content:"";
   position:absolute;
-  width:160px;
-  height:160px;
-  background:rgba(255,255,255,.15);
-  border-radius:50%;
-  filter:blur(40px);
-  animation:float 14s infinite alternate ease-in-out;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(232,93,117,.12), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(232,93,117,.08), transparent 40%);
+  animation:float 18s ease-in-out infinite alternate;
 }
 @keyframes float{
   from{transform:translateY(-40px)}
   to{transform:translateY(40px)}
 }
 
-/* premium card */
+/* main card */
 .card{
+  position:relative;
   width:92%;
-  max-width:380px;
-  background:rgba(255,255,255,.9);
-  border-radius:26px;
-  padding:28px 24px;
+  max-width:420px;
+  background:var(--card);
+  border-radius:24px;
+  padding:36px 32px;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,.08),
+    0 10px 25px rgba(0,0,0,.04);
   text-align:center;
-  box-shadow:0 30px 70px rgba(0,0,0,.2);
-  backdrop-filter:blur(10px);
   transform-style:preserve-3d;
   transition:transform .15s ease;
 }
 
-/* subtle header */
-.name{
-  font-size:14px;
-  letter-spacing:1.2px;
-  color:#999;
-  margin-bottom:6px;
+/* small label */
+.label{
+  font-size:11px;
+  letter-spacing:1.4px;
+  color:var(--muted);
+  margin-bottom:14px;
 }
 
-/* emotional question */
+/* question */
 .question{
-  font-size:20px;
+  font-size:22px;
   line-height:1.45;
-  color:#ff4f8b;
-  min-height:90px;
-  margin-bottom:12px;
+  color:var(--text);
+  min-height:96px;
+  margin-bottom:20px;
 }
 
 /* progress */
 .progress{
-  font-size:13px;
-  color:#bbb;
-  margin-bottom:14px;
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:26px;
 }
 
 /* buttons */
@@ -84,56 +89,56 @@ body{
   justify-content:center;
   gap:14px;
 }
+
 button{
+  appearance:none;
   border:none;
-  border-radius:30px;
+  border-radius:999px;
   padding:12px 28px;
-  font-size:15px;
+  font-size:14px;
   cursor:pointer;
-  transition:.15s;
+  transition:.15s ease;
 }
+
 .yes{
-  background:#ff4f8b;
-  color:white;
-  box-shadow:0 10px 25px rgba(255,79,139,.4);
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 12px 30px rgba(232,93,117,.35);
 }
+
 .no{
-  background:#f2f2f2;
-  color:#777;
+  background:#efefef;
+  color:#666;
   position:relative;
+}
+
+/* final ring */
+.ring{
+  font-size:64px;
+  margin-bottom:10px;
+  animation:ring .9s ease forwards;
+}
+@keyframes ring{
+  from{transform:scale(.2);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 /* celebration */
 .spark{
   position:fixed;
-  font-size:22px;
+  font-size:18px;
   animation:fall 3s linear forwards;
 }
 @keyframes fall{
   to{transform:translateY(110vh);opacity:0}
-}
-
-/* ring */
-.ring{
-  font-size:64px;
-  margin-bottom:8px;
-  animation:ring 1.2s ease forwards;
-}
-@keyframes ring{
-  0%{transform:scale(0)}
-  60%{transform:scale(1.3)}
-  100%{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<div class="glow" style="top:10%;left:5%"></div>
-<div class="glow" style="bottom:10%;right:5%"></div>
-
 <div class="card" id="card">
-  <div class="name">FOR TEJASHWINI</div>
+  <div class="label">FOR TEJASHWINI</div>
   <div class="question" id="question"></div>
   <div class="progress" id="progress"></div>
   <div class="buttons">
@@ -144,16 +149,16 @@ button{
 
 <script>
 const questions=[
-"From the moment you came into my life,<br>things felt calmer… warmer.",
-"With you, even silence feels comfortable.",
-"Life won’t always be perfect…<br>but would you face it with me?",
-"I don’t want a perfect story,<br>I want *our* story.",
-"Through bad days and beautiful ones,<br>will you hold my hand?",
-"Tejashwini, you feel like home to me.",
-"I promise effort, respect, and love — every day.",
-"No matter where life takes us,<br>I choose you.",
-"This isn’t just a question…<br>it’s my heart asking.",
-"Will you be my wife? 💍"
+  "Some people change a moment.<br>Some change a lifetime.",
+  "You quietly became my favourite part of every day.",
+  "With you, even ordinary days feel meaningful.",
+  "I don’t want perfection — I want honesty, effort, and us.",
+  "Through calm days and chaotic ones, I’d choose you.",
+  "You feel like home in a way nothing else ever has.",
+  "This isn’t about today — it’s about every tomorrow.",
+  "I promise respect, patience, and love.",
+  "This question carries my whole heart.",
+  "Will you be my wife, Tejashwini?"
 ];
 
 let i=0;
@@ -166,8 +171,8 @@ function type(text){
   let j=0;
   const t=setInterval(()=>{
     q.innerHTML+=text[j++];
-    if(j>=text.length)clearInterval(t);
-  },32);
+    if(j>=text.length) clearInterval(t);
+  },28);
 }
 
 function show(){
@@ -181,21 +186,25 @@ function yes(){
   if(i<questions.length){
     show();
   }else{
-    q.innerHTML="<div class='ring'>💍</div>Answer locked forever 🔒<br>I love you, Tejashwini ❤️";
+    q.innerHTML=
+      "<div class='ring'>💍</div>" +
+      "Answer locked forever.<br>" +
+      "<span style='color:#e85d75'>I love you, Tejashwini.</span>";
     p.innerText="";
     celebrate();
   }
 }
 
 function no(){
-  noBtn.style.transform=`translate(${Math.random()*160-80}px,${Math.random()*120-60}px)`;
+  noBtn.style.transform=
+    `translate(${Math.random()*160-80}px,${Math.random()*120-60}px)`;
 }
 
 function celebrate(){
-  for(let k=0;k<200;k++){
+  for(let k=0;k<160;k++){
     let s=document.createElement("div");
     s.className="spark";
-    s.innerText=["✨","💖","🎉","🎆"][Math.floor(Math.random()*4)];
+    s.innerText=["✦","✧","✨","❋"][Math.floor(Math.random()*4)];
     s.style.left=Math.random()*100+"vw";
     s.style.top="-10px";
     document.body.appendChild(s);
@@ -203,18 +212,22 @@ function celebrate(){
   }
 }
 
-/* mobile-safe 3D tilt */
+/* subtle 3D tilt (mobile safe) */
 const card=document.getElementById("card");
 document.addEventListener("mousemove",e=>{
-  card.style.transform=`rotateY(${(window.innerWidth/2-e.clientX)/30}deg)
-                         rotateX(${(window.innerHeight/2-e.clientY)/30}deg)`;
+  card.style.transform=
+    `rotateY(${(window.innerWidth/2-e.clientX)/40}deg)
+     rotateX(${(window.innerHeight/2-e.clientY)/40}deg)`;
 });
 document.addEventListener("touchmove",e=>{
   const t=e.touches[0];
-  card.style.transform=`rotateY(${(window.innerWidth/2-t.clientX)/40}deg)
-                         rotateX(${(window.innerHeight/2-t.clientY)/40}deg)`;
+  card.style.transform=
+    `rotateY(${(window.innerWidth/2-t.clientX)/50}deg)
+     rotateX(${(window.innerHeight/2-t.clientY)/50}deg)`;
 });
-document.addEventListener("mouseleave",()=>card.style.transform="rotateX(0) rotateY(0)");
+document.addEventListener("mouseleave",()=>{
+  card.style.transform="rotateX(0) rotateY(0)";
+});
 </script>
 
 </body>
