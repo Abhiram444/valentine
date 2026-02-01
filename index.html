@@ -13,48 +13,57 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#ffd6e8,#e0f7fa);
+  background:linear-gradient(135deg,#ffe6f0,#e6f7ff);
   font-family:"Poppins",sans-serif;
   overflow:hidden;
   perspective:1200px;
 }
 
-/* floating emojis */
-.floating{
+/* floating cute icons */
+.float{
   position:absolute;
-  font-size:20px;
-  animation:float 8s linear infinite;
+  font-size:22px;
   opacity:.5;
+  animation:float 8s linear infinite;
 }
 @keyframes float{
-  0%{transform:translateY(110vh)}
-  100%{transform:translateY(-10vh)}
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-10vh)}
 }
 
-/* 3D card */
+/* 3D Card */
 .card{
   background:white;
   border-radius:25px;
-  padding:35px 25px;
+  padding:25px;
   width:90%;
   max-width:380px;
   text-align:center;
-  box-shadow:0 25px 50px rgba(0,0,0,.15);
+  box-shadow:0 25px 45px rgba(0,0,0,.15);
   transform-style:preserve-3d;
-  transition:.2s;
+  transition:.15s;
+}
+
+/* avatars */
+.avatars{
+  display:flex;
+  justify-content:space-around;
+  font-size:45px;
+  margin-bottom:10px;
+  transform:translateZ(40px);
 }
 
 h1{
   color:#ff4f8b;
-  font-size:22px;
-  min-height:80px;
+  font-size:21px;
+  min-height:75px;
   transform:translateZ(40px);
 }
 
 .progress{
-  font-size:13px;
-  color:#999;
-  margin-bottom:10px;
+  font-size:12px;
+  color:#aaa;
+  margin-bottom:6px;
 }
 
 .buttons{
@@ -67,31 +76,47 @@ h1{
 button{
   border:none;
   border-radius:30px;
-  padding:12px 28px;
-  font-size:16px;
+  padding:12px 26px;
+  font-size:15px;
   cursor:pointer;
   box-shadow:0 8px 0 rgba(0,0,0,.15);
   transition:.15s;
 }
-
 button:active{
   transform:translateY(5px);
   box-shadow:0 3px 0 rgba(0,0,0,.15);
 }
+.yes{background:#ff4f8b;color:white}
+.no{background:#eee;color:#555;position:relative}
 
-.yes{
-  background:#ff4f8b;
-  color:white;
+/* slideshow */
+.slideshow{
+  width:100%;
+  height:160px;
+  border-radius:15px;
+  margin-top:10px;
+  overflow:hidden;
+  display:none;
+}
+.slideshow img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-.no{
-  background:#eee;
-  color:#555;
-  position:relative;
+/* ring box */
+.ring{
+  font-size:60px;
+  animation:open 1.2s ease forwards;
+}
+@keyframes open{
+  0%{transform:scale(0)}
+  60%{transform:scale(1.2)}
+  100%{transform:scale(1)}
 }
 
-/* hearts */
-.heart{
+/* celebration */
+.pop{
   position:fixed;
   font-size:22px;
   animation:fall 3s linear forwards;
@@ -104,20 +129,33 @@ button:active{
 
 <body>
 
+<!-- floating icons -->
 <script>
 for(let i=0;i<30;i++){
   let f=document.createElement("div");
-  f.className="floating";
-  f.innerText=["💖","✨","💗","🌸"][Math.floor(Math.random()*4)];
+  f.className="float";
+  f.innerText=["💖","✨","🌸","💫"][Math.floor(Math.random()*4)];
   f.style.left=Math.random()*100+"vw";
   f.style.animationDuration=(5+Math.random()*5)+"s";
   document.body.appendChild(f);
 }
 </script>
 
+<!-- sound -->
+<audio id="popSound">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b5c5e33b3.mp3">
+</audio>
+
 <div class="card" id="card">
+  <div class="avatars">🧑🏻‍💼 💕 👩🏻‍💼</div>
   <div class="progress" id="progress"></div>
   <h1 id="question"></h1>
+
+  <!-- slideshow -->
+  <div class="slideshow" id="slideshow">
+    <img id="slide" src="photo1.jpg">
+  </div>
+
   <div class="buttons">
     <button class="yes" onclick="yes()">Yes 💕</button>
     <button class="no" id="no" onclick="no()">No 🙈</button>
@@ -128,20 +166,26 @@ for(let i=0;i<30;i++){
 const questions=[
 "Tejashwini 💖 Will you be my Valentine?",
 "Do you like surprises? 🎁",
-"Do I make you smile sometimes? 😊",
-"Can I steal your hand forever? 🤝",
-"Will you laugh with me on bad days? 😄",
-"Can we travel the world together? ✈️",
+"Do I make you smile? 😊",
+"Can I hold your hand forever? 🤝",
+"Will you laugh with me daily? 😄",
+"Can we travel together? ✈️",
 "Will you be my safe place? 🌸",
 "Do you believe in us? 💕",
-"Are you ready for forever with me? 💍",
-"Last question… will you be my wife? 💖"
+"Almost there… ready for forever? 💍",
+"Final question… will you be my wife? 💖"
 ];
 
 let i=0;
 const q=document.getElementById("question");
 const p=document.getElementById("progress");
 const noBtn=document.getElementById("no");
+const sound=document.getElementById("popSound");
+const slideshow=document.getElementById("slideshow");
+const slide=document.getElementById("slide");
+
+const photos=["photo1.jpg","photo2.jpg","photo3.jpg"];
+let photoIndex=0;
 
 function show(){
   q.innerHTML=questions[i];
@@ -150,25 +194,30 @@ function show(){
 show();
 
 function yes(){
+  sound.play();
   i++;
+
+  if(i===6) slideshow.style.display="block";
+
   if(i<questions.length){
     show();
+    slide.src=photos[photoIndex++%photos.length];
   }else{
-    q.innerHTML="You chose forever 💖<br>I love you, Tejashwini 🌸💍";
+    q.innerHTML="<div class='ring'>💍</div><br>You chose forever 💖<br>I love you, Tejashwini 🌸";
     p.innerText="";
     celebrate();
   }
 }
 
 function no(){
-  noBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*150-75}px)`;
+  noBtn.style.transform=`translate(${Math.random()*180-90}px,${Math.random()*140-70}px)`;
 }
 
 function celebrate(){
-  for(let j=0;j<180;j++){
+  for(let j=0;j<200;j++){
     let h=document.createElement("div");
-    h.className="heart";
-    h.innerText="💖";
+    h.className="pop";
+    h.innerText=["🎉","💖","✨","🎆"][Math.floor(Math.random()*4)];
     h.style.left=Math.random()*100+"vw";
     h.style.top="-10px";
     document.body.appendChild(h);
@@ -179,8 +228,8 @@ function celebrate(){
 /* 3D tilt */
 const card=document.getElementById("card");
 document.addEventListener("mousemove",e=>{
-  const x=(window.innerWidth/2-e.clientX)/20;
-  const y=(window.innerHeight/2-e.clientY)/20;
+  const x=(window.innerWidth/2-e.clientX)/25;
+  const y=(window.innerHeight/2-e.clientY)/25;
   card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
 });
 document.addEventListener("mouseleave",()=>card.style.transform="rotateX(0) rotateY(0)");
