@@ -6,230 +6,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <style>
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-:root{
-  --bg:#f6f6f6;
-  --card:#ffffff;
-  --text:#1a1a1a;
-  --muted:#8f8f8f;
-  --accent:#e85d75;
-}
-
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--bg);
-  font-family:-apple-system,BlinkMacSystemFont,"Inter","Poppins",sans-serif;
-  -webkit-font-smoothing:antialiased;
-  overflow:hidden;
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ambient luxury glow */
-body::before{
-  content:"";
-  position:absolute;
-  inset:-40%;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(232,93,117,.12), transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(232,93,117,.08), transparent 45%);
-  animation:float 18s ease-in-out infinite alternate;
-}
-@keyframes float{
-  from{transform:translateY(-40px)}
-  to{transform:translateY(40px)}
+.container {
+  width: 90%;
+  max-width: 720px;
+  padding: 60px 0;
 }
 
-/* main card */
-.card{
-  width:92%;
-  max-width:420px;
-  background:var(--card);
-  border-radius:26px;
-  padding:40px 32px;
-  text-align:center;
-  box-shadow:
-    0 40px 90px rgba(0,0,0,.08),
-    0 12px 30px rgba(0,0,0,.04);
-  transform-style:preserve-3d;
-  transition:transform .15s ease;
+.line {
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1.35;
+  font-weight: 500;
+  margin: 0 0 48px 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* header label */
-.label{
-  font-size:11px;
-  letter-spacing:1.6px;
-  color:var(--muted);
-  margin-bottom:20px;
+.line.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* question */
-.question{
-  font-size:22px;
-  line-height:1.5;
-  color:var(--text);
-  min-height:110px;
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity .6s ease, transform .6s ease;
-}
-.question.show{
-  opacity:1;
-  transform:translateY(0);
+.hint {
+  font-size: 13px;
+  color: #888;
+  margin-top: 40px;
 }
 
-/* helper */
-.hint{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:18px;
+.photo {
+  margin-top: 60px;
+  display: none;
 }
 
-/* progress */
-.progress{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:10px;
+.photo img {
+  width: 100%;
+  border-radius: 12px;
+  filter: grayscale(100%) contrast(1.05);
 }
 
-/* final photo */
-.photo{
-  width:100%;
-  margin-top:18px;
-  border-radius:18px;
-  overflow:hidden;
-  display:none;
-}
-.photo img{
-  width:100%;
-  display:block;
-  filter:grayscale(100%) contrast(1.05);
+.final {
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 600;
+  margin-top: 40px;
 }
 
-/* ring */
-.ring{
-  font-size:64px;
-  margin-bottom:14px;
-  animation:ring 1s ease forwards;
-}
-@keyframes ring{
-  from{transform:scale(.2);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-/* celebration */
-.spark{
-  position:fixed;
-  font-size:18px;
-  animation:fall 3s linear forwards;
-}
-@keyframes fall{
-  to{transform:translateY(110vh);opacity:0}
+.signature {
+  margin-top: 32px;
+  font-size: 16px;
+  color: #555;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="card">
-  <div class="label">FOR TEJASHWINI</div>
-  <div class="question" id="question"></div>
-  <div class="photo" id="photo">
-    <!-- 🔴 Replace this image with your own black & white photo -->
-    <img src="memory.jpg" alt="Us">
-  </div>
-  <div class="hint" id="hint">Scroll or swipe to continue</div>
-  <div class="progress" id="progress"></div>
+<div class="container" id="container">
+  <div class="line show">Tejashwini.</div>
 </div>
 
 <script>
-const questions=[
-  "Some people change a moment.<br>Some change a lifetime.",
-  "You quietly became my favourite part of every day.",
-  "With you, even silence feels meaningful.",
-  "I don’t want perfection — I want honesty, effort, and us.",
-  "Through calm days and chaotic ones, I’d still choose you.",
-  "You feel like home in a way nothing else ever has.",
-  "This isn’t about today — it’s about every tomorrow.",
-  "I promise patience, respect, and love — always.",
-  "This question carries my whole heart.",
-  "Will you be my wife, Tejashwini?"
+const lines = [
+  "I’ve rewritten this a hundred times.",
+  "Not because I didn’t know what to say.",
+  "But because some things matter too much to rush.",
+  "You didn’t arrive loudly in my life.",
+  "You arrived quietly — and stayed.",
+  "Somewhere between conversations and silences,",
+  "you became my calm.",
+  "My certainty.",
+  "I don’t promise perfection.",
+  "I promise presence.",
+  "Effort.",
+  "And choosing you — every day.",
+  "So this isn’t really a question.",
+  "It’s a decision I’ve already made."
 ];
 
-let i=0;
-const q=document.getElementById("question");
-const p=document.getElementById("progress");
-const hint=document.getElementById("hint");
-const photo=document.getElementById("photo");
+let index = 0;
+const container = document.getElementById("container");
 
-function show(){
-  q.classList.remove("show");
-  setTimeout(()=>{
-    q.innerHTML=questions[i];
-    q.classList.add("show");
-    p.innerText=`${i+1} / ${questions.length}`;
-  },200);
+function addLine(text) {
+  const el = document.createElement("div");
+  el.className = "line";
+  el.innerHTML = text;
+  container.appendChild(el);
+  setTimeout(() => el.classList.add("show"), 50);
 }
-show();
 
-/* scroll / swipe to continue */
-let last=0;
-function advance(){
-  const now=Date.now();
-  if(now-last<700) return;
-  last=now;
-
-  i++;
-  if(i<questions.length){
-    show();
-  }else{
-    q.innerHTML=
-      "<div class='ring'>💍</div>" +
-      "Answer locked forever.<br>" +
-      "<span style='color:#e85d75'>I love you, Tejashwini.</span>";
-    q.classList.add("show");
-    p.innerText="";
-    hint.style.display="none";
-    photo.style.display="block";
-    celebrate();
+function advance() {
+  if (index < lines.length) {
+    addLine(lines[index]);
+    index++;
+  } else {
+    showFinal();
+    window.removeEventListener("click", advance);
   }
 }
 
-window.addEventListener("wheel",advance,{passive:true});
-window.addEventListener("touchstart",advance,{passive:true});
+function showFinal() {
+  const final = document.createElement("div");
+  final.className = "line final show";
+  final.innerHTML = "Will you be my wife?";
+  container.appendChild(final);
 
-/* celebration */
-function celebrate(){
-  for(let k=0;k<140;k++){
-    let s=document.createElement("div");
-    s.className="spark";
-    s.innerText=["✦","✧","✨","❋"][Math.floor(Math.random()*4)];
-    s.style.left=Math.random()*100+"vw";
-    s.style.top="-10px";
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),3000);
-  }
+  const photo = document.createElement("div");
+  photo.className = "photo";
+  photo.innerHTML = `
+    <img src="memory.jpg" alt="Us">
+    <div class="signature">— Abhiram</div>
+  `;
+  container.appendChild(photo);
+  photo.style.display = "block";
 }
 
-/* subtle 3D tilt */
-const card=document.getElementById("card");
-document.addEventListener("mousemove",e=>{
-  card.style.transform=
-    `rotateY(${(window.innerWidth/2-e.clientX)/45}deg)
-     rotateX(${(window.innerHeight/2-e.clientY)/45}deg)`;
-});
-document.addEventListener("touchmove",e=>{
-  const t=e.touches[0];
-  card.style.transform=
-    `rotateY(${(window.innerWidth/2-t.clientX)/55}deg)
-     rotateX(${(window.innerHeight/2-t.clientY)/55}deg)`;
-});
-document.addEventListener("mouseleave",()=>{
-  card.style.transform="rotateX(0) rotateY(0)";
-});
+window.addEventListener("click", advance);
 </script>
 
 </body>
