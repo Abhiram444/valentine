@@ -27,7 +27,7 @@ body{
   overflow:hidden;
 }
 
-/* blurred background fill */
+/* blurred cinematic fill */
 .stage::before{
   content:"";
   position:absolute;
@@ -37,18 +37,17 @@ body{
   transform:scale(1.2);
 }
 
-/* actual image (never cropped) */
+/* actual image */
 .stage img{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  object-fit:contain; /* 🔥 THIS IS THE FIX */
+  object-fit:contain;
   object-position:center;
   animation:slowZoom 28s ease-in-out infinite alternate;
 }
 
-/* cinematic zoom (safe with contain) */
 @keyframes slowZoom{
   from{transform:scale(1);}
   to{transform:scale(1.04);}
@@ -109,7 +108,7 @@ body{
 
 <body>
 
-<!-- IMAGE LAYER -->
+<!-- IMAGE -->
 <div class="stage">
   <img src="background.jpg" alt="Us">
 </div>
@@ -121,6 +120,7 @@ body{
 </div>
 
 <script>
+/* ===== STORY ===== */
 const lines = [
   "Some people enter your life quietly.",
   "They don’t ask for attention.",
@@ -137,10 +137,9 @@ const lines = [
 let index = 0;
 const el = document.getElementById("line");
 const duration = 5200;
+const pauseBetweenLoops = 1800; // small pause before restarting
 
 function showNext(){
-  if(index >= lines.length) return;
-
   el.textContent = lines[index];
   el.className = "line" + (index === lines.length - 1 ? " final" : "");
   el.style.animation = "none";
@@ -148,9 +147,19 @@ function showNext(){
   el.style.animation = `fadeCycle ${duration}ms ease forwards`;
 
   index++;
-  setTimeout(showNext, duration);
+
+  if(index >= lines.length){
+    // restart from beginning after last line
+    setTimeout(() => {
+      index = 0;
+      showNext();
+    }, duration + pauseBetweenLoops);
+  } else {
+    setTimeout(showNext, duration);
+  }
 }
 
+/* autoplay forever */
 setTimeout(showNext, 1400);
 </script>
 
