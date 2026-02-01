@@ -5,8 +5,8 @@
 <title>For Tejashwini</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<!-- Cinematic Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<!-- Artistic Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
@@ -15,28 +15,28 @@ body{
   margin:0;
   height:100vh;
   overflow:hidden;
-  background:#000;
-  font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color:#f6f6f6;
+  background:#111; /* safety fallback */
+  color:#f2f2f2;
+  font-family:'Cormorant Garamond', serif;
 }
 
-/* ===== BACKGROUND STAGE ===== */
+/* ===== IMAGE STAGE ===== */
 .stage{
   position:fixed;
   inset:0;
   overflow:hidden;
 }
 
-/* FULLSCREEN BLURRED BACKGROUND */
-.stage .bg{
+/* FULL-CANVAS BLURRED FILL (NO BLACK EDGES) */
+.stage .wash{
   position:absolute;
-  inset:0;
+  inset:-30%;
   background:url("background.jpg") center/cover no-repeat;
-  filter:blur(35px) brightness(0.5);
-  transform:scale(1.2);
+  filter:blur(55px) brightness(0.75) saturate(1.1);
+  transform:scale(1.4);
 }
 
-/* SHARP HERO IMAGE */
+/* MAIN IMAGE (NEVER CROPPED) */
 .stage img{
   position:absolute;
   inset:0;
@@ -44,27 +44,44 @@ body{
   height:100%;
   object-fit:contain;
   object-position:center;
-  animation:slowZoom 28s ease-in-out infinite alternate;
+  filter:contrast(1.05) saturate(1.05);
+  animation:slowFloat 38s ease-in-out infinite alternate;
 }
 
-/* subtle vignette */
-.vignette{
-  position:fixed;
+/* soft cinematic light bleed */
+.light{
+  position:absolute;
   inset:0;
-  background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.85));
-  pointer-events:none;
+  background:
+    radial-gradient(600px 420px at 25% 35%, rgba(255,220,190,.18), transparent 60%),
+    radial-gradient(520px 380px at 75% 65%, rgba(255,180,210,.14), transparent 65%);
+  mix-blend-mode:screen;
+  animation:lightMove 26s ease-in-out infinite alternate;
 }
 
-/* slow cinematic zoom */
-@keyframes slowZoom{
+@keyframes lightMove{
+  from{transform:translate(0,0);}
+  to{transform:translate(-30px,20px);}
+}
+
+@keyframes slowFloat{
   from{transform:scale(1);}
   to{transform:scale(1.04);}
 }
 
-/* ===== CONTENT ===== */
+/* subtle film grain */
+.stage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+/* ===== TEXT LAYER ===== */
 .frame{
   position:relative;
-  z-index:3;
+  z-index:5;
   height:100%;
   display:flex;
   align-items:center;
@@ -73,93 +90,87 @@ body{
   text-align:center;
 }
 
-/* ===== CINEMATIC TEXT ===== */
+/* poetic text */
 .line{
   position:absolute;
   max-width:760px;
   font-family:'Playfair Display', serif;
-  font-size:clamp(26px,4vw,44px);
-  line-height:1.55;
-  letter-spacing:0.02em;
+  font-size:clamp(28px,4vw,46px);
+  line-height:1.6;
+  letter-spacing:0.03em;
   font-weight:400;
   opacity:0;
-  color:#ffffff;
+  color:#f5f5f5;
 
   text-shadow:
-    0 14px 50px rgba(0,0,0,.75),
-    0 0 14px rgba(0,0,0,.6);
+    0 18px 60px rgba(0,0,0,.65),
+    0 0 18px rgba(0,0,0,.4);
 
-  animation:fadeCycle 5.2s ease forwards;
+  animation:poem 6.4s ease forwards;
 }
 
-@keyframes fadeCycle{
-  0%{opacity:0;transform:translateY(18px)}
-  20%{opacity:1;transform:translateY(0)}
+/* dissolve-style animation */
+@keyframes poem{
+  0%{opacity:0;filter:blur(6px);transform:translateY(20px)}
+  25%{opacity:1;filter:blur(0);transform:translateY(0)}
   70%{opacity:1}
-  100%{opacity:0;transform:translateY(-12px)}
+  100%{opacity:0;filter:blur(4px);transform:translateY(-14px)}
 }
 
 .final{
   font-style:italic;
-  letter-spacing:0.05em;
+  letter-spacing:0.06em;
 }
 </style>
 </head>
 
 <body>
 
-<!-- IMAGE STAGE -->
 <div class="stage">
-  <div class="bg"></div>
+  <div class="wash"></div>
   <img src="background.jpg" alt="Us">
+  <div class="light"></div>
 </div>
-<div class="vignette"></div>
 
-<!-- TEXT -->
 <div class="frame">
   <div class="line" id="line"></div>
 </div>
 
 <script>
-/* ===== STORY LOOP ===== */
 const lines = [
   "Some people enter your life quietly.",
-  "They don’t ask for attention.",
-  "They don’t try to impress.",
+  "Without announcements.",
+  "Without reasons.",
   "They simply stay.",
-  "With you, time felt softer.",
+  "With you, time softened.",
+  "Noise learned how to rest.",
   "Crowded places felt calmer.",
-  "Even chaos felt warm.",
-  "If this were a movie,",
-  "you would be my favourite scene.",
+  "If this were a story,",
+  "you would be my favourite chapter.",
   "And the ending I choose."
 ];
 
-let index = 0;
+let i = 0;
 const el = document.getElementById("line");
-const duration = 5200;
-const pause = 1800;
+const duration = 6400;
+const pause = 2400;
 
 function play(){
-  el.textContent = lines[index];
-  el.className = "line" + (index === lines.length - 1 ? " final" : "");
+  el.textContent = lines[i];
+  el.className = "line" + (i === lines.length - 1 ? " final" : "");
   el.style.animation = "none";
   void el.offsetWidth;
-  el.style.animation = `fadeCycle ${duration}ms ease forwards`;
+  el.style.animation = `poem ${duration}ms ease forwards`;
 
-  index++;
-
-  if(index >= lines.length){
-    setTimeout(() => {
-      index = 0;
-      play();
-    }, duration + pause);
+  i++;
+  if(i >= lines.length){
+    setTimeout(() => { i = 0; play(); }, duration + pause);
   } else {
     setTimeout(play, duration);
   }
 }
 
-setTimeout(play, 1400);
+setTimeout(play, 1800);
 </script>
 
 </body>
