@@ -9,34 +9,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
 body{
   margin:0;
   height:100vh;
   overflow:hidden;
-  background:#0c0f18;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#000;
   color:#f6f6f6;
-  font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* ===== CINEMATIC NIGHT BACKGROUND ===== */
+/* ===== BACKGROUND IMAGE (YOUR PHOTO) ===== */
 .scene{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(900px 600px at 30% 25%, rgba(255,255,255,.07), transparent 60%),
-    radial-gradient(700px 500px at 70% 75%, rgba(255,160,190,.06), transparent 65%),
-    linear-gradient(180deg,#0c0f18,#151a2b,#0c0f18);
-  animation:breath 26s ease-in-out infinite alternate;
+    linear-gradient(
+      rgba(0,0,0,0.55),
+      rgba(0,0,0,0.75)
+    ),
+    url("background.jpg") center/cover no-repeat;
+  animation:slowZoom 28s ease-in-out infinite alternate;
 }
 
-@keyframes breath{
-  from { transform:scale(1); }
-  to   { transform:scale(1.04); }
+/* slow cinematic zoom */
+@keyframes slowZoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.06);}
 }
 
-/* ===== CONTENT FRAME ===== */
+/* film grain */
+.scene::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+/* vignette */
+.vignette{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.85));
+}
+
+/* ===== CONTENT ===== */
 .frame{
   position:relative;
   z-index:2;
@@ -51,34 +70,34 @@ body{
 /* ===== CINEMATIC TEXT ===== */
 .line{
   position:absolute;
-  max-width:720px;
-  font-family:'Playfair Display', serif;
+  max-width:760px;
+  font-family:'Playfair Display',serif;
   font-size:clamp(26px,4vw,44px);
-  line-height:1.5;
+  line-height:1.55;
   letter-spacing:0.02em;
   font-weight:400;
   opacity:0;
-  color:#f7f7f7;
+  color:#f8f8f8;
 
   text-shadow:
-    0 10px 40px rgba(0,0,0,.45),
+    0 12px 40px rgba(0,0,0,.6),
     0 0 12px rgba(255,255,255,.08);
 
-  animation:fadeCycle 5s ease forwards;
+  animation:fadeCycle 5.2s ease forwards;
 }
 
-/* Fade in → stay → fade out */
+/* fade in → read → fade out */
 @keyframes fadeCycle{
-  0%   { opacity:0; transform:translateY(16px); }
-  20%  { opacity:1; transform:translateY(0); }
-  65%  { opacity:1; }
-  100% { opacity:0; transform:translateY(-10px); }
+  0%{opacity:0;transform:translateY(18px)}
+  20%{opacity:1;transform:translateY(0)}
+  70%{opacity:1}
+  100%{opacity:0;transform:translateY(-12px)}
 }
 
-/* Final line emphasis */
+/* final line */
 .final{
   font-style:italic;
-  letter-spacing:0.04em;
+  letter-spacing:0.05em;
 }
 </style>
 </head>
@@ -86,21 +105,22 @@ body{
 <body>
 
 <div class="scene"></div>
+<div class="vignette"></div>
 
 <div class="frame">
   <div class="line" id="line"></div>
 </div>
 
 <script>
-/* ===== STORY SCRIPT ===== */
+/* ===== ROMANTIC STORY ===== */
 const lines = [
   "Some people enter your life quietly.",
   "They don’t ask for attention.",
-  "They don’t rush your heart.",
+  "They don’t try to impress.",
   "They simply stay.",
-  "With you, time felt slower.",
-  "Ordinary moments felt warmer.",
-  "Even silence felt like home.",
+  "With you, time felt softer.",
+  "Crowded places felt calmer.",
+  "Even chaos felt warm.",
   "If this were a movie,",
   "you would be my favourite scene.",
   "And the ending I choose."
@@ -108,7 +128,7 @@ const lines = [
 
 let index = 0;
 const el = document.getElementById("line");
-const duration = 5000; // must match animation duration
+const duration = 5200; // must match animation
 
 function showNext(){
   if(index >= lines.length) return;
@@ -123,8 +143,8 @@ function showNext(){
   setTimeout(showNext, duration);
 }
 
-/* Auto start like a movie intro */
-setTimeout(showNext, 1200);
+/* auto play like a movie intro */
+setTimeout(showNext, 1400);
 </script>
 
 </body>
