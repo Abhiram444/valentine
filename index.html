@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Tejashwini 💖</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>For Tejashwini ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <style>
 *{box-sizing:border-box}
@@ -13,12 +13,11 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(270deg,#ffd6e8,#e0f7fa,#fce1ff);
-  background-size:600% 600%;
-  animation:bg 18s ease infinite;
-  font-family:"Poppins",sans-serif;
+  background:linear-gradient(120deg,#f6d365,#fda085,#fbc2eb,#a6c1ee);
+  background-size:400% 400%;
+  animation:bg 20s ease infinite;
+  font-family:-apple-system,BlinkMacSystemFont,"Poppins",sans-serif;
   overflow:hidden;
-  perspective:1200px;
 }
 @keyframes bg{
   0%{background-position:0% 50%}
@@ -26,55 +25,57 @@ body{
   100%{background-position:0% 50%}
 }
 
-/* floating particles */
-.float{
+/* soft floating glow */
+.glow{
   position:absolute;
-  font-size:18px;
-  opacity:.4;
-  animation:float 9s linear infinite;
+  width:160px;
+  height:160px;
+  background:rgba(255,255,255,.15);
+  border-radius:50%;
+  filter:blur(40px);
+  animation:float 14s infinite alternate ease-in-out;
 }
 @keyframes float{
-  from{transform:translateY(110vh)}
-  to{transform:translateY(-10vh)}
+  from{transform:translateY(-40px)}
+  to{transform:translateY(40px)}
 }
 
-/* 3D card */
+/* premium card */
 .card{
-  background:rgba(255,255,255,.85);
-  border-radius:28px;
-  padding:26px 22px;
   width:92%;
   max-width:380px;
+  background:rgba(255,255,255,.9);
+  border-radius:26px;
+  padding:28px 24px;
   text-align:center;
-  box-shadow:0 30px 60px rgba(0,0,0,.18);
-  backdrop-filter:blur(12px);
+  box-shadow:0 30px 70px rgba(0,0,0,.2);
+  backdrop-filter:blur(10px);
   transform-style:preserve-3d;
-  transition:.15s;
+  transition:transform .15s ease;
 }
 
-/* avatars */
-.avatars{
-  font-size:44px;
-  margin-bottom:8px;
-  transform:translateZ(40px);
-}
-
-/* progress hearts */
-.progress{
+/* subtle header */
+.name{
   font-size:14px;
+  letter-spacing:1.2px;
+  color:#999;
   margin-bottom:6px;
 }
-.progress span{
+
+/* emotional question */
+.question{
+  font-size:20px;
+  line-height:1.45;
   color:#ff4f8b;
-  font-size:16px;
+  min-height:90px;
+  margin-bottom:12px;
 }
 
-/* question */
-h1{
-  font-size:20px;
-  color:#ff4f8b;
-  min-height:80px;
-  transform:translateZ(45px);
+/* progress */
+.progress{
+  font-size:13px;
+  color:#bbb;
+  margin-bottom:14px;
 }
 
 /* buttons */
@@ -82,38 +83,40 @@ h1{
   display:flex;
   justify-content:center;
   gap:14px;
-  margin-top:8px;
-  transform:translateZ(55px);
 }
 button{
   border:none;
   border-radius:30px;
-  padding:12px 26px;
+  padding:12px 28px;
   font-size:15px;
   cursor:pointer;
-  box-shadow:0 8px 0 rgba(0,0,0,.15);
   transition:.15s;
 }
-button:active{
-  transform:translateY(5px);
-  box-shadow:0 3px 0 rgba(0,0,0,.15);
+.yes{
+  background:#ff4f8b;
+  color:white;
+  box-shadow:0 10px 25px rgba(255,79,139,.4);
 }
-.yes{background:#ff4f8b;color:white}
-.no{background:#eee;color:#555;position:relative}
+.no{
+  background:#f2f2f2;
+  color:#777;
+  position:relative;
+}
 
 /* celebration */
-.pop{
+.spark{
   position:fixed;
   font-size:22px;
   animation:fall 3s linear forwards;
 }
 @keyframes fall{
-  to{transform:translateY(100vh);opacity:0}
+  to{transform:translateY(110vh);opacity:0}
 }
 
 /* ring */
 .ring{
-  font-size:60px;
+  font-size:64px;
+  margin-bottom:8px;
   animation:ring 1.2s ease forwards;
 }
 @keyframes ring{
@@ -126,54 +129,37 @@ button:active{
 
 <body>
 
-<script>
-for(let i=0;i<28;i++){
-  let f=document.createElement("div");
-  f.className="float";
-  f.innerText=["💖","✨","🌸","💫"][Math.floor(Math.random()*4)];
-  f.style.left=Math.random()*100+"vw";
-  f.style.animationDuration=(6+Math.random()*6)+"s";
-  document.body.appendChild(f);
-}
-</script>
-
-<audio id="pop">
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b5c5e33b3.mp3">
-</audio>
+<div class="glow" style="top:10%;left:5%"></div>
+<div class="glow" style="bottom:10%;right:5%"></div>
 
 <div class="card" id="card">
-  <div class="avatars">🧑🏻‍💼 💕 👩🏻‍💼</div>
+  <div class="name">FOR TEJASHWINI</div>
+  <div class="question" id="question"></div>
   <div class="progress" id="progress"></div>
-  <h1 id="question"></h1>
   <div class="buttons">
-    <button class="yes" onclick="yes()">Yes 💕</button>
-    <button class="no" id="no" onclick="no()">No 🙈</button>
+    <button class="yes" onclick="yes()">Yes</button>
+    <button class="no" id="no" onclick="no()">No</button>
   </div>
 </div>
 
 <script>
 const questions=[
-"Tejashwini 💖 Will you be my Valentine?",
-"Koncham cute question 😌<br>Na tho smile chesthava?",
-"Life lo boring anipinchinappudu…<br>na tho navvuthava? 😄",
-"Mana hand ni life antha vadalanu… ok na? 🤝",
-"Trips, chai, silly fights… anni kalisi? ☕✈️",
-"Na bad days lo na support ga untava? 🌸",
-"Mana story ni forever book la marchukundama? 📖",
-"Almost there 😳… ready aa?",
-"Last before final… promise me always? 💕",
-"Final question 💍<br>Will you be my wife, Tejashwini?"
+"From the moment you came into my life,<br>things felt calmer… warmer.",
+"With you, even silence feels comfortable.",
+"Life won’t always be perfect…<br>but would you face it with me?",
+"I don’t want a perfect story,<br>I want *our* story.",
+"Through bad days and beautiful ones,<br>will you hold my hand?",
+"Tejashwini, you feel like home to me.",
+"I promise effort, respect, and love — every day.",
+"No matter where life takes us,<br>I choose you.",
+"This isn’t just a question…<br>it’s my heart asking.",
+"Will you be my wife? 💍"
 ];
 
 let i=0;
 const q=document.getElementById("question");
 const p=document.getElementById("progress");
 const noBtn=document.getElementById("no");
-const pop=document.getElementById("pop");
-
-function hearts(){
-  return "❤️".repeat(i)+"🤍".repeat(questions.length-i);
-}
 
 function type(text){
   q.innerHTML="";
@@ -181,55 +167,52 @@ function type(text){
   const t=setInterval(()=>{
     q.innerHTML+=text[j++];
     if(j>=text.length)clearInterval(t);
-  },35);
+  },32);
 }
 
 function show(){
-  p.innerHTML=hearts();
+  p.innerText=`${i+1} / ${questions.length}`;
   type(questions[i]);
 }
 show();
 
 function yes(){
-  pop.play();
   i++;
   if(i<questions.length){
     show();
   }else{
-    q.innerHTML="<div class='ring'>💍</div><br>Answer locked forever 🔒💖<br>I love you, Tejashwini 🌸";
-    p.innerHTML="";
+    q.innerHTML="<div class='ring'>💍</div>Answer locked forever 🔒<br>I love you, Tejashwini ❤️";
+    p.innerText="";
     celebrate();
   }
 }
 
 function no(){
-  noBtn.style.transform=`translate(${Math.random()*180-90}px,${Math.random()*120-60}px)`;
+  noBtn.style.transform=`translate(${Math.random()*160-80}px,${Math.random()*120-60}px)`;
 }
 
 function celebrate(){
-  for(let k=0;k<220;k++){
-    let h=document.createElement("div");
-    h.className="pop";
-    h.innerText=["🎉","💖","✨","🎆"][Math.floor(Math.random()*4)];
-    h.style.left=Math.random()*100+"vw";
-    h.style.top="-10px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),3000);
+  for(let k=0;k<200;k++){
+    let s=document.createElement("div");
+    s.className="spark";
+    s.innerText=["✨","💖","🎉","🎆"][Math.floor(Math.random()*4)];
+    s.style.left=Math.random()*100+"vw";
+    s.style.top="-10px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),3000);
   }
 }
 
-/* 3D tilt (touch + mouse safe) */
+/* mobile-safe 3D tilt */
 const card=document.getElementById("card");
 document.addEventListener("mousemove",e=>{
-  const x=(window.innerWidth/2-e.clientX)/25;
-  const y=(window.innerHeight/2-e.clientY)/25;
-  card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+  card.style.transform=`rotateY(${(window.innerWidth/2-e.clientX)/30}deg)
+                         rotateX(${(window.innerHeight/2-e.clientY)/30}deg)`;
 });
 document.addEventListener("touchmove",e=>{
   const t=e.touches[0];
-  const x=(window.innerWidth/2-t.clientX)/30;
-  const y=(window.innerHeight/2-t.clientY)/30;
-  card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+  card.style.transform=`rotateY(${(window.innerWidth/2-t.clientX)/40}deg)
+                         rotateX(${(window.innerHeight/2-t.clientY)/40}deg)`;
 });
 document.addEventListener("mouseleave",()=>card.style.transform="rotateX(0) rotateY(0)");
 </script>
