@@ -1,125 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>For Tejashwini ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>For Tejashwini ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Arial', sans-serif;
-      overflow: hidden;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    .card {
-      background: white;
-      padding: 30px 25px;
-      border-radius: 18px;
-      text-align: center;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-      position: relative;
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  perspective: 1200px;
+}
 
-    h1 {
-      color: #ff3366;
-      margin-bottom: 25px;
-    }
+/* Floating hearts */
+.bg-heart {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0.4;
+  animation: floatUp 10s linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(110vh); }
+  100% { transform: translateY(-10vh); }
+}
 
-    button {
-      padding: 12px 26px;
-      margin: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: 0.2s;
-      position: relative;
-    }
+/* 3D Card */
+.card {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 22px;
+  padding: 35px 30px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
+  transform-style: preserve-3d;
+  animation: pop 1s ease;
+}
 
-    button:hover {
-      transform: scale(1.1);
-    }
+@keyframes pop {
+  from { transform: scale(0.8) rotateX(15deg); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-    .yes {
-      background: #ff3366;
-      color: white;
-    }
+h1 {
+  color: #ff2f6d;
+  margin-bottom: 25px;
+  transform: translateZ(40px);
+}
 
-    .no {
-      background: #ccc;
-      color: #333;
-    }
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  transform: translateZ(50px);
+}
 
-    .heart {
-      position: fixed;
-      color: red;
-      font-size: 18px;
-      animation: fall 3s linear forwards;
-    }
+button {
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 10px 0 rgba(0,0,0,0.15);
+  transition: 0.2s;
+}
 
-    @keyframes fall {
-      0% { transform: translateY(-10vh) scale(1); }
-      100% { transform: translateY(110vh) scale(1.5); }
-    }
-  </style>
+button:active {
+  transform: translateY(6px);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+}
+
+.yes {
+  background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+  color: white;
+}
+
+.no {
+  background: linear-gradient(135deg, #ddd, #f5f5f5);
+  color: #333;
+  position: relative;
+}
+
+/* Hearts blast */
+.heart {
+  position: fixed;
+  font-size: 22px;
+  animation: blast 3s forwards;
+}
+@keyframes blast {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh) scale(1.5); opacity: 0; }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Background Music -->
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_4a1fefcfd3.mp3" type="audio/mpeg">
-  </audio>
+<script>
+for (let i = 0; i < 25; i++) {
+  const h = document.createElement("div");
+  h.className = "bg-heart";
+  h.innerText = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = (6 + Math.random() * 6) + "s";
+  document.body.appendChild(h);
+}
+</script>
 
-  <div class="card">
-    <h1 id="question">Tejashwini ❤️<br>Will you be my Valentine?</h1>
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_4a1fefcfd3.mp3">
+</audio>
+
+<div class="card">
+  <h1 id="question"></h1>
+  <div class="buttons">
     <button class="yes" onclick="yesClicked()">Yes</button>
     <button class="no" id="noBtn" onclick="noClicked()">No</button>
   </div>
+</div>
 
-  <script>
-    let askedAgain = false;
-    const noBtn = document.getElementById("noBtn");
+<script>
+const questions = [
+  "Tejashwini ❤️<br>Will you be my Valentine?",
+  "Do you promise to smile with me every day? 😊",
+  "Will you hold my hand forever? 🤝",
+  "Will you grow old with me? 👵❤️👴",
+  "One last question… 💕<br>Will you be my wife? 💍"
+];
 
-    function yesClicked() {
-      document.getElementById("question").innerHTML =
-        "You just made me the happiest person ❤️<br>I love you, Tejashwini 💕";
+let step = 0;
+const q = document.getElementById("question");
+const noBtn = document.getElementById("noBtn");
+const music = document.getElementById("music");
 
-      for (let i = 0; i < 200; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(heart);
+q.innerHTML = questions[step];
 
-        setTimeout(() => heart.remove(), 3000);
-      }
-    }
+function yesClicked() {
+  music.play();
+  step++;
 
-    function noClicked() {
-      if (!askedAgain) {
-        document.getElementById("question").innerHTML =
-          "Tejashwini 💍❤️<br>Will you be my wife?";
-        askedAgain = true;
-      } else {
-        moveNoButton();
-      }
-    }
+  if (step < questions.length) {
+    q.innerHTML = questions[step];
+  } else {
+    q.innerHTML = "You said YES to forever ❤️<br>I love you, Tejashwini 💍💕";
+    blastHearts();
+  }
+}
 
-    function moveNoButton() {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 200 - 100;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-  </script>
+function noClicked() {
+  music.play();
+  moveNo();
+}
+
+function moveNo() {
+  const x = Math.random() * 240 - 120;
+  const y = Math.random() * 180 - 90;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function blastHearts() {
+  for (let i = 0; i < 200; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-10px";
+    heart.style.animationDuration = (2 + Math.random() * 2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+  }
+}
+</script>
 
 </body>
 </html>
