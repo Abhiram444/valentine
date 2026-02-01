@@ -13,36 +13,27 @@ body{
   height:100vh;
   overflow:hidden;
   font-family:-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif;
-  background:#0b0d12;
-  color:#f5f5f5;
+  background:#0e1118;
+  color:#f4f4f4;
 }
 
-/* ===== KOREAN CINEMATIC BACKGROUND ===== */
+/* ===== CINEMATIC BACKGROUND ===== */
 .scene{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(800px 600px at 20% 30%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(700px 500px at 80% 70%, rgba(255,180,200,.06), transparent 65%),
-    linear-gradient(180deg,#0b0d12,#141824,#0b0d12);
-  animation:nightBreath 30s ease-in-out infinite alternate;
+    radial-gradient(900px 600px at 30% 30%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(700px 500px at 70% 70%, rgba(255,170,190,.05), transparent 65%),
+    linear-gradient(180deg,#0e1118,#161b2b,#0e1118);
+  animation:breath 22s ease-in-out infinite alternate;
 }
 
-@keyframes nightBreath{
+@keyframes breath{
   from{transform:scale(1);}
   to{transform:scale(1.04);}
 }
 
-/* soft rain light grain */
-.scene::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-  pointer-events:none;
-}
-
-/* ===== CONTENT FRAME ===== */
+/* ===== CONTENT ===== */
 .frame{
   position:relative;
   z-index:2;
@@ -50,49 +41,25 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:0 10%;
+  padding:0 12%;
+  text-align:center;
 }
 
-.copy{
-  max-width:560px;
-}
-
-/* text animation */
 .line{
-  font-size:clamp(24px,4vw,40px);
-  line-height:1.4;
+  position:absolute;
+  font-size:clamp(24px,4vw,42px);
+  line-height:1.45;
   font-weight:400;
-  margin-bottom:28px;
   opacity:0;
-  transform:translateY(20px);
-  animation:fadeLine 1.6s ease forwards;
+  animation:fadeCycle 4.5s ease forwards;
 }
 
-/* timing — like a drama scene */
-.line:nth-child(1){animation-delay:2s}
-.line:nth-child(2){animation-delay:6s}
-.line:nth-child(3){animation-delay:10s}
-.line:nth-child(4){animation-delay:14s}
-.line:nth-child(5){animation-delay:18s}
-.line:nth-child(6){animation-delay:22s}
-.line:nth-child(7){animation-delay:26s}
-
-@keyframes fadeLine{
-  to{opacity:1;transform:translateY(0);}
-}
-
-/* final emphasis */
-.final{
-  font-weight:500;
-  margin-top:36px;
-}
-
-/* signature */
-.signature{
-  margin-top:48px;
-  font-size:14px;
-  letter-spacing:1px;
-  opacity:.65;
+/* fade in → stay → fade out */
+@keyframes fadeCycle{
+  0%{opacity:0}
+  20%{opacity:1}
+  60%{opacity:1}
+  100%{opacity:0}
 }
 </style>
 </head>
@@ -102,20 +69,45 @@ body{
 <div class="scene"></div>
 
 <div class="frame">
-  <div class="copy">
-    <div class="line">Some people come into your life</div>
-    <div class="line">without asking for space.</div>
-    <div class="line">They just stay.</div>
-
-    <div class="line">With you,</div>
-    <div class="line">even ordinary moments felt like scenes</div>
-    <div class="line">I wanted to remember.</div>
-
-    <div class="line final">If this were a story,<br>you would be the ending I choose.</div>
-
-    <div class="signature">— Abhiram</div>
-  </div>
+  <div class="line" id="line"></div>
 </div>
+
+<script>
+/* ===== STORY LINES ===== */
+const lines = [
+  "Some people enter your life quietly.",
+  "They don’t ask for attention.",
+  "They just stay.",
+  "With you, time felt softer.",
+  "Ordinary moments felt warm.",
+  "Even silence felt complete.",
+  "If this were a film,",
+  "you would be the scene I replay.",
+  "And the ending I choose.",
+  "Always."
+];
+
+let index = 0;
+const el = document.getElementById("line");
+
+/* timing control */
+const totalDuration = 4500; // must match animation duration
+
+function showNext(){
+  if(index >= lines.length) return;
+
+  el.textContent = lines[index];
+  el.style.animation = "none";
+  void el.offsetWidth; // reset animation
+  el.style.animation = `fadeCycle ${totalDuration}ms ease forwards`;
+
+  index++;
+  setTimeout(showNext, totalDuration);
+}
+
+/* start automatically */
+setTimeout(showNext, 1000);
+</script>
 
 </body>
 </html>
