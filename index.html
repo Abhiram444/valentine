@@ -20,26 +20,28 @@ html, body{
   font-family:'Cormorant Garamond', serif;
 }
 
-/* ===== FULLSCREEN CINEMATIC IMAGE ===== */
+/* ===== BLURRED FULLSCREEN BACKGROUND ===== */
 .stage{
   position:fixed;
   inset:0;
   background:
     linear-gradient(
       to bottom,
-      rgba(0,0,0,0.25),
-      rgba(0,0,0,0.65)
+      rgba(0,0,0,0.35),
+      rgba(0,0,0,0.75)
     ),
     url("background.jpeg") no-repeat;
   background-size:cover;
   background-position:center 65%;
+  filter:blur(10px) brightness(0.9);
+  transform:scale(1.08); /* prevents blur edges */
   animation:cinemaZoom 32s ease-in-out infinite alternate;
 }
 
-/* gentle cinematic zoom */
+/* slow cinematic zoom */
 @keyframes cinemaZoom{
-  from{transform:scale(1);}
-  to{transform:scale(1.06);}
+  from{transform:scale(1.08);}
+  to{transform:scale(1.14);}
 }
 
 /* subtle film grain */
@@ -73,10 +75,10 @@ html, body{
   letter-spacing:0.03em;
   font-weight:400;
   opacity:0;
-  color:#f7f7f7;
+  color:#f8f8f8;
 
   text-shadow:
-    0 20px 60px rgba(0,0,0,.7),
+    0 20px 60px rgba(0,0,0,.8),
     0 0 14px rgba(0,0,0,.6);
 
   animation:poem 6.2s ease forwards;
