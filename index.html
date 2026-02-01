@@ -6,122 +6,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
-  color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-font-smoothing: antialiased;
+body{
+  margin:0;
+  min-height:100vh;
+  background:#fafafa;
+  font-family:-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif;
+  color:#0f0f0f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.container {
-  width: 90%;
-  max-width: 720px;
-  padding: 60px 0;
+.wrapper{
+  width:90%;
+  max-width:680px;
+  padding:80px 0;
 }
 
-.line {
-  font-size: clamp(24px, 4vw, 38px);
-  line-height: 1.35;
-  font-weight: 500;
-  margin: 0 0 48px 0;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+.text{
+  font-size:clamp(26px,4.5vw,42px);
+  line-height:1.3;
+  font-weight:500;
+  margin-bottom:56px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .9s ease, transform .9s ease;
 }
 
-.line.show {
-  opacity: 1;
-  transform: translateY(0);
+.text.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-.hint {
-  font-size: 13px;
-  color: #888;
-  margin-top: 40px;
+.small{
+  font-size:14px;
+  color:#777;
+  margin-top:40px;
 }
 
-.photo {
-  margin-top: 60px;
-  display: none;
+.photo{
+  display:none;
+  margin-top:60px;
 }
 
-.photo img {
-  width: 100%;
-  border-radius: 12px;
-  filter: grayscale(100%) contrast(1.05);
+.photo img{
+  width:100%;
+  border-radius:14px;
+  filter:grayscale(100%) contrast(1.05);
 }
 
-.final {
-  font-size: clamp(26px, 4vw, 42px);
-  font-weight: 600;
-  margin-top: 40px;
+.final{
+  font-weight:600;
 }
 
-.signature {
-  margin-top: 32px;
-  font-size: 16px;
-  color: #555;
+.signature{
+  margin-top:24px;
+  font-size:16px;
+  color:#555;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="container">
-  <div class="line show">Tejashwini.</div>
+<div class="wrapper" id="wrapper">
+  <div class="text show">Tejashwini.</div>
+  <div class="small">Tap anywhere</div>
 </div>
 
 <script>
 const lines = [
-  "I’ve rewritten this a hundred times.",
-  "Not because I didn’t know what to say.",
-  "But because some things matter too much to rush.",
-  "You didn’t arrive loudly in my life.",
-  "You arrived quietly — and stayed.",
-  "Somewhere between conversations and silences,",
-  "you became my calm.",
-  "My certainty.",
-  "I don’t promise perfection.",
-  "I promise presence.",
-  "Effort.",
-  "And choosing you — every day.",
-  "So this isn’t really a question.",
-  "It’s a decision I’ve already made."
+  "Some things take time to understand.",
+  "Not because they are complicated —",
+  "but because they are important.",
+  "You didn’t change my life overnight.",
+  "You changed it gradually.",
+  "In the way mornings felt quieter.",
+  "In the way decisions felt clearer.",
+  "In the way the future stopped feeling uncertain.",
+  "I don’t believe in perfect people.",
+  "I believe in choosing someone — again and again.",
+  "With patience.",
+  "With honesty.",
+  "With love.",
+  "This isn’t a promise made lightly.",
+  "It’s a choice made carefully."
 ];
 
-let index = 0;
-const container = document.getElementById("container");
+let i = 0;
+const wrapper = document.getElementById("wrapper");
 
-function addLine(text) {
+function add(text){
   const el = document.createElement("div");
-  el.className = "line";
+  el.className = "text";
   el.innerHTML = text;
-  container.appendChild(el);
-  setTimeout(() => el.classList.add("show"), 50);
+  wrapper.appendChild(el);
+  setTimeout(()=>el.classList.add("show"),60);
 }
 
-function advance() {
-  if (index < lines.length) {
-    addLine(lines[index]);
-    index++;
+function advance(){
+  if(i < lines.length){
+    add(lines[i]);
+    i++;
   } else {
-    showFinal();
-    window.removeEventListener("click", advance);
+    finish();
+    document.removeEventListener("click", advance);
   }
 }
 
-function showFinal() {
-  const final = document.createElement("div");
-  final.className = "line final show";
-  final.innerHTML = "Will you be my wife?";
-  container.appendChild(final);
+function finish(){
+  const q = document.createElement("div");
+  q.className = "text final show";
+  q.innerHTML = "Will you be my wife?";
+  wrapper.appendChild(q);
 
   const photo = document.createElement("div");
   photo.className = "photo";
@@ -129,11 +128,11 @@ function showFinal() {
     <img src="memory.jpg" alt="Us">
     <div class="signature">— Abhiram</div>
   `;
-  container.appendChild(photo);
+  wrapper.appendChild(photo);
   photo.style.display = "block";
 }
 
-window.addEventListener("click", advance);
+document.addEventListener("click", advance);
 </script>
 
 </body>
