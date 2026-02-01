@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>For Tejashwini 💖</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <style>
 *{box-sizing:border-box}
@@ -13,66 +13,78 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#ffe6f0,#e6f7ff);
+  background:linear-gradient(270deg,#ffd6e8,#e0f7fa,#fce1ff);
+  background-size:600% 600%;
+  animation:bg 18s ease infinite;
   font-family:"Poppins",sans-serif;
   overflow:hidden;
   perspective:1200px;
 }
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-/* floating cute icons */
+/* floating particles */
 .float{
   position:absolute;
-  font-size:22px;
-  opacity:.5;
-  animation:float 8s linear infinite;
+  font-size:18px;
+  opacity:.4;
+  animation:float 9s linear infinite;
 }
 @keyframes float{
   from{transform:translateY(110vh)}
   to{transform:translateY(-10vh)}
 }
 
-/* 3D Card */
+/* 3D card */
 .card{
-  background:white;
-  border-radius:25px;
-  padding:25px;
-  width:90%;
+  background:rgba(255,255,255,.85);
+  border-radius:28px;
+  padding:26px 22px;
+  width:92%;
   max-width:380px;
   text-align:center;
-  box-shadow:0 25px 45px rgba(0,0,0,.15);
+  box-shadow:0 30px 60px rgba(0,0,0,.18);
+  backdrop-filter:blur(12px);
   transform-style:preserve-3d;
   transition:.15s;
 }
 
 /* avatars */
 .avatars{
-  display:flex;
-  justify-content:space-around;
-  font-size:45px;
-  margin-bottom:10px;
+  font-size:44px;
+  margin-bottom:8px;
   transform:translateZ(40px);
 }
 
-h1{
-  color:#ff4f8b;
-  font-size:21px;
-  min-height:75px;
-  transform:translateZ(40px);
-}
-
+/* progress hearts */
 .progress{
-  font-size:12px;
-  color:#aaa;
+  font-size:14px;
   margin-bottom:6px;
 }
+.progress span{
+  color:#ff4f8b;
+  font-size:16px;
+}
 
+/* question */
+h1{
+  font-size:20px;
+  color:#ff4f8b;
+  min-height:80px;
+  transform:translateZ(45px);
+}
+
+/* buttons */
 .buttons{
   display:flex;
   justify-content:center;
-  gap:15px;
-  transform:translateZ(50px);
+  gap:14px;
+  margin-top:8px;
+  transform:translateZ(55px);
 }
-
 button{
   border:none;
   border-radius:30px;
@@ -89,32 +101,6 @@ button:active{
 .yes{background:#ff4f8b;color:white}
 .no{background:#eee;color:#555;position:relative}
 
-/* slideshow */
-.slideshow{
-  width:100%;
-  height:160px;
-  border-radius:15px;
-  margin-top:10px;
-  overflow:hidden;
-  display:none;
-}
-.slideshow img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* ring box */
-.ring{
-  font-size:60px;
-  animation:open 1.2s ease forwards;
-}
-@keyframes open{
-  0%{transform:scale(0)}
-  60%{transform:scale(1.2)}
-  100%{transform:scale(1)}
-}
-
 /* celebration */
 .pop{
   position:fixed;
@@ -124,25 +110,34 @@ button:active{
 @keyframes fall{
   to{transform:translateY(100vh);opacity:0}
 }
+
+/* ring */
+.ring{
+  font-size:60px;
+  animation:ring 1.2s ease forwards;
+}
+@keyframes ring{
+  0%{transform:scale(0)}
+  60%{transform:scale(1.3)}
+  100%{transform:scale(1)}
+}
 </style>
 </head>
 
 <body>
 
-<!-- floating icons -->
 <script>
-for(let i=0;i<30;i++){
+for(let i=0;i<28;i++){
   let f=document.createElement("div");
   f.className="float";
   f.innerText=["💖","✨","🌸","💫"][Math.floor(Math.random()*4)];
   f.style.left=Math.random()*100+"vw";
-  f.style.animationDuration=(5+Math.random()*5)+"s";
+  f.style.animationDuration=(6+Math.random()*6)+"s";
   document.body.appendChild(f);
 }
 </script>
 
-<!-- sound -->
-<audio id="popSound">
+<audio id="pop">
   <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b5c5e33b3.mp3">
 </audio>
 
@@ -150,12 +145,6 @@ for(let i=0;i<30;i++){
   <div class="avatars">🧑🏻‍💼 💕 👩🏻‍💼</div>
   <div class="progress" id="progress"></div>
   <h1 id="question"></h1>
-
-  <!-- slideshow -->
-  <div class="slideshow" id="slideshow">
-    <img id="slide" src="photo1.jpg">
-  </div>
-
   <div class="buttons">
     <button class="yes" onclick="yes()">Yes 💕</button>
     <button class="no" id="no" onclick="no()">No 🙈</button>
@@ -165,56 +154,60 @@ for(let i=0;i<30;i++){
 <script>
 const questions=[
 "Tejashwini 💖 Will you be my Valentine?",
-"Do you like surprises? 🎁",
-"Do I make you smile? 😊",
-"Can I hold your hand forever? 🤝",
-"Will you laugh with me daily? 😄",
-"Can we travel together? ✈️",
-"Will you be my safe place? 🌸",
-"Do you believe in us? 💕",
-"Almost there… ready for forever? 💍",
-"Final question… will you be my wife? 💖"
+"Koncham cute question 😌<br>Na tho smile chesthava?",
+"Life lo boring anipinchinappudu…<br>na tho navvuthava? 😄",
+"Mana hand ni life antha vadalanu… ok na? 🤝",
+"Trips, chai, silly fights… anni kalisi? ☕✈️",
+"Na bad days lo na support ga untava? 🌸",
+"Mana story ni forever book la marchukundama? 📖",
+"Almost there 😳… ready aa?",
+"Last before final… promise me always? 💕",
+"Final question 💍<br>Will you be my wife, Tejashwini?"
 ];
 
 let i=0;
 const q=document.getElementById("question");
 const p=document.getElementById("progress");
 const noBtn=document.getElementById("no");
-const sound=document.getElementById("popSound");
-const slideshow=document.getElementById("slideshow");
-const slide=document.getElementById("slide");
+const pop=document.getElementById("pop");
 
-const photos=["photo1.jpg","photo2.jpg","photo3.jpg"];
-let photoIndex=0;
+function hearts(){
+  return "❤️".repeat(i)+"🤍".repeat(questions.length-i);
+}
+
+function type(text){
+  q.innerHTML="";
+  let j=0;
+  const t=setInterval(()=>{
+    q.innerHTML+=text[j++];
+    if(j>=text.length)clearInterval(t);
+  },35);
+}
 
 function show(){
-  q.innerHTML=questions[i];
-  p.innerText=`Question ${i+1} of ${questions.length}`;
+  p.innerHTML=hearts();
+  type(questions[i]);
 }
 show();
 
 function yes(){
-  sound.play();
+  pop.play();
   i++;
-
-  if(i===6) slideshow.style.display="block";
-
   if(i<questions.length){
     show();
-    slide.src=photos[photoIndex++%photos.length];
   }else{
-    q.innerHTML="<div class='ring'>💍</div><br>You chose forever 💖<br>I love you, Tejashwini 🌸";
-    p.innerText="";
+    q.innerHTML="<div class='ring'>💍</div><br>Answer locked forever 🔒💖<br>I love you, Tejashwini 🌸";
+    p.innerHTML="";
     celebrate();
   }
 }
 
 function no(){
-  noBtn.style.transform=`translate(${Math.random()*180-90}px,${Math.random()*140-70}px)`;
+  noBtn.style.transform=`translate(${Math.random()*180-90}px,${Math.random()*120-60}px)`;
 }
 
 function celebrate(){
-  for(let j=0;j<200;j++){
+  for(let k=0;k<220;k++){
     let h=document.createElement("div");
     h.className="pop";
     h.innerText=["🎉","💖","✨","🎆"][Math.floor(Math.random()*4)];
@@ -225,11 +218,17 @@ function celebrate(){
   }
 }
 
-/* 3D tilt */
+/* 3D tilt (touch + mouse safe) */
 const card=document.getElementById("card");
 document.addEventListener("mousemove",e=>{
   const x=(window.innerWidth/2-e.clientX)/25;
   const y=(window.innerHeight/2-e.clientY)/25;
+  card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+});
+document.addEventListener("touchmove",e=>{
+  const t=e.touches[0];
+  const x=(window.innerWidth/2-t.clientX)/30;
+  const y=(window.innerHeight/2-t.clientY)/30;
   card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
 });
 document.addEventListener("mouseleave",()=>card.style.transform="rotateX(0) rotateY(0)");
