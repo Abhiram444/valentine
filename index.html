@@ -6,220 +6,120 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <style>
-/* ================= RESET ================= */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*{box-sizing:border-box}
 
-/* ================= ROOT ================= */
-:root{
-  --text-main:#f5f5f5;
-  --text-muted:#b5b5b5;
-}
-
-/* ================= BODY ================= */
 body{
-  min-height:100vh;
+  margin:0;
+  height:100vh;
   font-family:-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:#000;
   overflow:hidden;
-  background:#0e0e10;
-  color:var(--text-main);
+  color:#fff;
 }
 
-/* ================= CINEMATIC BACKGROUND ================= */
-.background{
+/* ===== CINEMATIC PERFUME BACKGROUND ===== */
+.scene{
   position:fixed;
   inset:0;
-  z-index:-3;
-  overflow:hidden;
+  background:
+    radial-gradient(1200px 800px at 20% 30%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(900px 700px at 80% 70%, rgba(255,255,255,.06), transparent 65%),
+    linear-gradient(120deg,#050505,#0b0b0b,#050505);
+  animation:breath 26s ease-in-out infinite alternate;
 }
 
-/* moving light blooms */
-.light{
-  position:absolute;
-  width:120vmax;
-  height:120vmax;
-  border-radius:50%;
-  filter:blur(140px);
-  opacity:0.28;
-  animation:float 30s ease-in-out infinite alternate;
+/* slow cinematic breathing */
+@keyframes breath{
+  from{transform:scale(1) translateY(0);}
+  to{transform:scale(1.05) translateY(-30px);}
 }
 
-.light.one{
-  background:#ffb7c5;
-  top:-30%;
-  left:-25%;
-}
-
-.light.two{
-  background:#b7ccff;
-  bottom:-35%;
-  right:-25%;
-  animation-delay:10s;
-}
-
-@keyframes float{
-  from{transform:translate(0,0);}
-  to{transform:translate(60px,-40px);}
-}
-
-/* subtle vignette */
-.vignette{
+/* film grain */
+.scene::after{
+  content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at center, transparent 55%, rgba(0,0,0,.6));
-}
-
-/* cinematic grain */
-.grain{
-  position:absolute;
-  inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
   pointer-events:none;
 }
 
-/* ================= CONTENT ================= */
-.wrapper{
-  width:90%;
-  max-width:780px;
-  padding:120px 0;
+/* vignette */
+.vignette{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.85));
+}
+
+/* ===== CONTENT ===== */
+.frame{
   position:relative;
   z-index:2;
-  animation:drift 14s ease-in-out infinite alternate;
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 10%;
 }
 
-@keyframes drift{
-  from{transform:translateY(0);}
-  to{transform:translateY(-24px);}
+.copy{
+  max-width:520px;
 }
 
-/* text lines */
+/* text */
 .line{
-  font-size:clamp(26px,4.6vw,46px);
+  font-size:clamp(26px,4vw,44px);
   line-height:1.3;
-  font-weight:500;
-  margin-bottom:60px;
+  font-weight:400;
+  margin-bottom:34px;
   opacity:0;
-  transform:translateY(40px);
-  transition:opacity 1s ease, transform 1s ease;
+  transform:translateY(20px);
+  animation:fadeUp 1.8s ease forwards;
 }
 
-.line.show{
-  opacity:1;
-  transform:translateY(0);
+/* precise cinematic timing */
+.line:nth-child(1){animation-delay:1.2s}
+.line:nth-child(2){animation-delay:4.2s}
+.line:nth-child(3){animation-delay:7.2s}
+.line:nth-child(4){animation-delay:10.2s}
+.line:nth-child(5){animation-delay:13.2s}
+.line:nth-child(6){animation-delay:16.5s}
+
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0);}
 }
 
-.small{
-  font-size:13px;
-  color:var(--text-muted);
-  letter-spacing:.6px;
-  margin-top:40px;
-}
-
-/* final emphasis */
+/* final line */
 .final{
-  font-weight:600;
+  font-weight:500;
   margin-top:40px;
 }
 
-/* photo reveal */
-.photo{
-  display:none;
-  margin-top:90px;
-}
-
-.photo img{
-  width:100%;
-  border-radius:18px;
-  filter:grayscale(100%) contrast(1.05);
-  box-shadow:0 50px 120px rgba(0,0,0,.65);
-}
-
+/* signature */
 .signature{
-  margin-top:28px;
-  font-size:16px;
-  color:#cfcfcf;
+  font-size:14px;
+  letter-spacing:1px;
+  opacity:.7;
+  margin-top:60px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
-<div class="background">
-  <div class="light one"></div>
-  <div class="light two"></div>
-  <div class="vignette"></div>
-  <div class="grain"></div>
-</div>
+<div class="scene"></div>
+<div class="vignette"></div>
 
-<!-- CONTENT -->
-<div class="wrapper" id="wrapper">
-  <div class="line show">Tejashwini.</div>
-  <div class="small">Tap anywhere</div>
-</div>
+<div class="frame">
+  <div class="copy">
+    <div class="line">Some things don’t arrive loudly.</div>
+    <div class="line">They settle in quietly.</div>
+    <div class="line">And suddenly, nothing feels the same.</div>
+    <div class="line">You didn’t change my life overnight.</div>
+    <div class="line">You changed it slowly.</div>
 
-<script>
-/* ================= STORY ================= */
-const lines = [
-  "Some things take time to understand.",
-  "Not because they are complicated —",
-  "but because they are important.",
-  "You didn’t change my life overnight.",
-  "You changed it gradually.",
-  "In the way mornings felt quieter.",
-  "In the way decisions felt clearer.",
-  "In the way the future stopped feeling uncertain.",
-  "I don’t believe in perfect people.",
-  "I believe in choosing someone — again and again.",
-  "With patience.",
-  "With honesty.",
-  "With love.",
-  "This isn’t a promise made lightly.",
-  "It’s a choice made carefully."
-];
-
-let i = 0;
-const wrapper = document.getElementById("wrapper");
-
-function addLine(text){
-  const el = document.createElement("div");
-  el.className = "line";
-  el.innerHTML = text;
-  wrapper.appendChild(el);
-  setTimeout(()=>el.classList.add("show"),100);
-}
-
-function advance(){
-  if(i < lines.length){
-    addLine(lines[i]);
-    i++;
-  } else {
-    finish();
-    document.removeEventListener("click", advance);
-  }
-}
-
-function finish(){
-  const q = document.createElement("div");
-  q.className = "line final show";
-  q.innerHTML = "Will you be my wife?";
-  wrapper.appendChild(q);
-
-  const photo = document.createElement("div");
-  photo.className = "photo";
-  photo.innerHTML = `
-    <img src="memory.jpg" alt="Us">
+    <div class="line final">Will you be my wife?</div>
     <div class="signature">— Abhiram</div>
-  `;
-  wrapper.appendChild(photo);
-  photo.style.display = "block";
-}
-
-/* interaction */
-document.addEventListener("click", advance);
-</script>
+  </div>
+</div>
 
 </body>
 </html>
