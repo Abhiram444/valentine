@@ -19,7 +19,7 @@ html,body{
   color:#fff;
 }
 
-/* ===== BACKGROUND ===== */
+/* ===== BACKGROUND (CLICK-SAFE) ===== */
 .bg{
   position:fixed;
   inset:0;
@@ -28,7 +28,7 @@ html,body{
     url("background.jpeg") center/cover no-repeat;
   filter:blur(4px);
   animation:breath 18s ease-in-out infinite;
-  transition:filter 2s ease;
+  pointer-events:none; /* ✅ FIX */
 }
 
 @keyframes breath{
@@ -36,7 +36,7 @@ html,body{
   50%{transform:scale(1.12)}
 }
 
-/* ===== LIGHT LEAK ===== */
+/* ===== LIGHT LEAK (CLICK-SAFE) ===== */
 .light{
   position:fixed;
   inset:-30%;
@@ -44,7 +44,7 @@ html,body{
     radial-gradient(circle at 30% 40%, rgba(255,180,120,.15), transparent 60%),
     radial-gradient(circle at 70% 60%, rgba(255,120,180,.12), transparent 65%);
   animation:lightMove 22s ease-in-out infinite alternate;
-  pointer-events:none;
+  pointer-events:none; /* ✅ FIX */
 }
 
 @keyframes lightMove{
@@ -52,7 +52,7 @@ html,body{
   to{transform:translate(-40px,30px)}
 }
 
-/* ===== FINAL PHOTO ===== */
+/* ===== FINAL PHOTO (CLICK-SAFE) ===== */
 .final-photo{
   position:fixed;
   inset:0;
@@ -62,12 +62,13 @@ html,body{
   opacity:0;
   transition:opacity 3s ease;
   z-index:6;
+  pointer-events:none; /* ✅ FIX */
 }
 
 /* ===== CONTAINER ===== */
 .site{
   position:relative;
-  z-index:3;
+  z-index:10;
   height:100%;
   display:flex;
   align-items:center;
@@ -99,7 +100,8 @@ h1{
   transition:text-shadow 3s ease;
 }
 
-.glow h1, .glow p{
+.glow h1,
+.glow p{
   text-shadow:0 0 18px rgba(255,180,200,.45);
 }
 
@@ -117,12 +119,14 @@ p{
   letter-spacing:.05em;
 }
 
-/* ===== ACTIONS ===== */
+/* ===== ACTIONS (ON TOP) ===== */
 .actions{
   margin-top:40px;
   display:flex;
   justify-content:center;
   gap:24px;
+  position:relative;
+  z-index:20; /* ✅ EXTRA SAFETY */
 }
 
 button{
@@ -159,7 +163,7 @@ button:hover{
 
 <body>
 
-<div class="bg" id="bg"></div>
+<div class="bg"></div>
 <div class="light"></div>
 <div class="final-photo" id="finalPhoto"></div>
 
@@ -206,6 +210,7 @@ button:hover{
 <audio id="shutter" src="https://cdn.pixabay.com/audio/2021/08/04/audio_6f47d9eaf7.mp3"></audio>
 
 <script>
+/* SECTION FLOW */
 const sections=document.querySelectorAll(".section");
 let current=0;
 let flow=setInterval(()=>{
@@ -214,7 +219,7 @@ let flow=setInterval(()=>{
   sections[current].classList.add("active");
 },7000);
 
-/* playful no */
+/* PLAYFUL NO */
 const noBtn=document.getElementById("noBtn");
 noBtn.onmouseenter=()=>noBtn.style.transform=
 `translate(${Math.random()*220-110}px,${Math.random()*120-60}px)`;
@@ -233,28 +238,21 @@ function celebrate(){
     document.getElementById("shutter").play();
   },2000);
 
-  // HEART RING
-  const centerX=window.innerWidth/2;
-  const centerY=window.innerHeight/2;
-  const radius=180;
+  /* HEART RING */
+  const cx=window.innerWidth/2;
+  const cy=window.innerHeight/2;
+  const r=180;
+  let a=0;
 
-  let angle=0;
   setInterval(()=>{
     const h=document.createElement("div");
     h.className="heart";
     h.innerText="❤️";
-    const size=36+Math.random()*40;
-    h.style.fontSize=size+"px";
-
-    const x=centerX + radius*Math.cos(angle);
-    const y=centerY + radius*Math.sin(angle);
-
-    h.style.left=x+"px";
-    h.style.top=y+"px";
-
+    h.style.fontSize=(36+Math.random()*40)+"px";
+    h.style.left=(cx+r*Math.cos(a))+"px";
+    h.style.top=(cy+r*Math.sin(a))+"px";
     document.body.appendChild(h);
-    angle+=0.25;
-
+    a+=0.25;
     setTimeout(()=>h.remove(),10000);
   },250);
 }
