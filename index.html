@@ -84,7 +84,6 @@ p{
   display:flex;
   justify-content:center;
   gap:24px;
-  position:relative;
 }
 
 button{
@@ -96,7 +95,6 @@ button{
   letter-spacing:.05em;
   cursor:pointer;
   transition:all .3s ease;
-  position:relative;
 }
 
 button:hover{
@@ -108,18 +106,24 @@ button:hover{
   position:relative;
 }
 
-/* ===== HEARTS ===== */
+/* ===== HEARTS (FINAL FINALE) ===== */
 .heart{
   position:fixed;
-  bottom:-20px;
-  font-size:20px;
-  animation:float 4s ease-in forwards;
+  bottom:-140px;
+  animation:float 8s ease-in forwards;
   pointer-events:none;
+  filter:drop-shadow(0 0 14px rgba(255,0,80,.6));
 }
 
 @keyframes float{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-120vh);opacity:0}
+  from{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-150vh) scale(1.2);
+    opacity:0;
+  }
 }
 </style>
 </head>
@@ -130,12 +134,11 @@ button:hover{
 
 <div class="site">
 
-  <!-- NAME ONLY -->
+  <!-- NAME -->
   <div class="section active">
     <h1>Tejashwini</h1>
   </div>
 
-  <!-- STORY -->
   <div class="section">
     <h1>I didn’t expect this</h1>
     <p>
@@ -203,24 +206,30 @@ setInterval(() => {
   sections[current].classList.add("active");
 }, sectionDuration);
 
-/* ===== HEART CELEBRATION ===== */
+/* ===== MASSIVE HEART FINALE (YES CLICK ONLY) ===== */
 function celebrate(){
-  for(let i=0;i<30;i++){
+  for(let i=0;i<200;i++){   // ❤️ LOTS of hearts
     const h=document.createElement("div");
     h.className="heart";
     h.innerText="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(3+Math.random()*2)+"s";
+
+    // BIG sizes: 40px → 120px
+    const size = 40 + Math.random()*80;
+    h.style.fontSize = size + "px";
+
+    h.style.left = Math.random()*100 + "vw";
+    h.style.animationDuration = (6 + Math.random()*4) + "s";
+
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),5000);
+    setTimeout(()=>h.remove(),10000);
   }
 }
 
 /* ===== PLAYFUL NO BUTTON ===== */
 const noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("mouseenter",()=>{
-  const x=(Math.random()*200)-100;
-  const y=(Math.random()*100)-50;
+  const x=(Math.random()*220)-110;
+  const y=(Math.random()*120)-60;
   noBtn.style.transform=`translate(${x}px,${y}px)`;
 });
 </script>
