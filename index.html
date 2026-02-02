@@ -19,7 +19,7 @@ html,body{
   color:#fff;
 }
 
-/* ===== BACKGROUND (BREATHING) ===== */
+/* ===== BACKGROUND ===== */
 .bg{
   position:fixed;
   inset:0;
@@ -96,6 +96,11 @@ h1{
   font-size:clamp(54px,7vw,86px);
   font-weight:400;
   margin-bottom:30px;
+  transition:text-shadow 3s ease;
+}
+
+.glow h1, .glow p{
+  text-shadow:0 0 18px rgba(255,180,200,.45);
 }
 
 p{
@@ -104,6 +109,7 @@ p{
   opacity:.9;
   max-width:680px;
   margin:0 auto;
+  transition:text-shadow 3s ease;
 }
 
 .final{
@@ -139,17 +145,14 @@ button:hover{
 /* ===== HEARTS ===== */
 .heart{
   position:fixed;
-  bottom:-160px;
-  animation:float 10s ease-in forwards;
+  font-size:48px;
   pointer-events:none;
+  animation:fade 10s linear forwards;
   filter:drop-shadow(0 0 16px rgba(255,0,90,.6));
 }
 
-@keyframes float{
-  to{
-    transform:translateY(-180vh) scale(1.4);
-    opacity:0;
-  }
+@keyframes fade{
+  to{opacity:0}
 }
 </style>
 </head>
@@ -160,7 +163,7 @@ button:hover{
 <div class="light"></div>
 <div class="final-photo" id="finalPhoto"></div>
 
-<div class="site">
+<div class="site" id="site">
 
   <div class="section active"><h1>Tejashwini</h1></div>
 
@@ -200,7 +203,7 @@ button:hover{
 </div>
 
 <audio id="pop" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2e3f0b2d1c.mp3"></audio>
-<audio id="ambient" src="https://cdn.pixabay.com/audio/2023/03/06/audio_9c0c6b94e7.mp3" loop></audio>
+<audio id="shutter" src="https://cdn.pixabay.com/audio/2021/08/04/audio_6f47d9eaf7.mp3"></audio>
 
 <script>
 const sections=document.querySelectorAll(".section");
@@ -217,31 +220,43 @@ noBtn.onmouseenter=()=>noBtn.style.transform=
 `translate(${Math.random()*220-110}px,${Math.random()*120-60}px)`;
 
 /* YES MOMENT */
-let heartLoop;
 function celebrate(){
 
   clearInterval(flow);
   noBtn.remove();
 
   document.getElementById("pop").play();
-  document.getElementById("ambient").play();
+  document.getElementById("site").classList.add("glow");
 
-  document.getElementById("bg").style.filter="blur(3px) brightness(1.05)";
-  document.getElementById("finalPhoto").style.opacity="1";
+  setTimeout(()=>{
+    document.getElementById("finalPhoto").style.opacity="1";
+    document.getElementById("shutter").play();
+  },2000);
 
-  heartLoop=setInterval(()=>{
-    for(let i=0;i<5;i++){
-      const h=document.createElement("div");
-      h.className="heart";
-      h.innerText="❤️";
-      h.style.fontSize=(36+Math.random()*90)+"px";
-      h.style.left=Math.random()*100+"vw";
-      h.style.opacity=0.4+Math.random()*0.6;
-      h.style.animationDuration=(7+Math.random()*6)+"s";
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(),16000);
-    }
-  },350);
+  // HEART RING
+  const centerX=window.innerWidth/2;
+  const centerY=window.innerHeight/2;
+  const radius=180;
+
+  let angle=0;
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="❤️";
+    const size=36+Math.random()*40;
+    h.style.fontSize=size+"px";
+
+    const x=centerX + radius*Math.cos(angle);
+    const y=centerY + radius*Math.sin(angle);
+
+    h.style.left=x+"px";
+    h.style.top=y+"px";
+
+    document.body.appendChild(h);
+    angle+=0.25;
+
+    setTimeout(()=>h.remove(),10000);
+  },250);
 }
 </script>
 
