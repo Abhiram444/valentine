@@ -29,6 +29,23 @@ html,body{
     url("background.jpeg") center/cover no-repeat;
   filter:blur(4px);
   transform:scale(1.06);
+  transition:opacity 2s ease;
+}
+
+/* ===== FINAL PHOTO REVEAL ===== */
+.final-photo{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.65)),
+    url("background.jpeg") center/cover no-repeat;
+  opacity:0;
+  z-index:10;
+  transition:opacity 2.5s ease;
+}
+
+.final-photo.show{
+  opacity:1;
 }
 
 /* ===== CONTAINER ===== */
@@ -84,7 +101,6 @@ p{
   display:flex;
   justify-content:center;
   gap:24px;
-  position:relative;
 }
 
 button{
@@ -103,7 +119,6 @@ button:hover{
   color:#000;
 }
 
-/* playful No button */
 #noBtn{
   position:relative;
 }
@@ -147,13 +162,8 @@ button:hover{
   transition:transform .8s ease .6s;
 }
 
-.open .box-lid{
-  transform:rotateX(-110deg);
-}
-
-.open .ring{
-  transform:translateX(-50%) scale(1);
-}
+.open .box-lid{transform:rotateX(-110deg);}
+.open .ring{transform:translateX(-50%) scale(1);}
 
 /* ===== CONFETTI ===== */
 .confetti{
@@ -161,7 +171,6 @@ button:hover{
   top:-10px;
   width:8px;
   height:14px;
-  background:red;
   animation:fall 3.5s linear forwards;
 }
 
@@ -176,16 +185,15 @@ button:hover{
 
 <body>
 
-<div class="bg"></div>
+<div class="bg" id="bg"></div>
+<div class="final-photo" id="finalPhoto"></div>
 
 <div class="site">
 
-  <!-- NAME -->
   <div class="section active">
     <h1>Tejashwini</h1>
   </div>
 
-  <!-- STORY -->
   <div class="section">
     <h1>I didn’t plan this</h1>
     <p>It just happened, quietly.</p>
@@ -193,10 +201,7 @@ button:hover{
 
   <div class="section">
     <h1>It grew</h1>
-    <p>
-      In our late-night talks.<br>
-      In the comfort we found.
-    </p>
+    <p>In our late-night talks.<br>In the comfort we found.</p>
   </div>
 
   <div class="section">
@@ -204,16 +209,13 @@ button:hover{
     <p>Because it feels right.</p>
   </div>
 
-  <!-- QUESTION -->
   <div class="section">
     <h1>Will you be my Valentine?</h1>
-
     <div class="actions">
       <button onclick="celebrate()">Yes</button>
       <button id="noBtn">No</button>
     </div>
 
-    <!-- Ring box -->
     <div class="ring-box" id="ringBox">
       <div class="box-lid"></div>
       <div class="box-bottom"></div>
@@ -223,7 +225,6 @@ button:hover{
 
 </div>
 
-<!-- SOUND -->
 <audio id="popSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2e3f0b2d1c.mp3"></audio>
 
 <script>
@@ -236,7 +237,7 @@ setInterval(()=>{
   sections[current].classList.add("active");
 },7000);
 
-/* ===== PLAYFUL NO BUTTON ===== */
+/* ===== PLAYFUL NO ===== */
 const noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("mouseenter",()=>{
   const x=(Math.random()*200)-100;
@@ -244,26 +245,28 @@ noBtn.addEventListener("mouseenter",()=>{
   noBtn.style.transform=`translate(${x}px,${y}px)`;
 });
 
-/* ===== CELEBRATION ===== */
+/* ===== CELEBRATION + PHOTO REVEAL ===== */
 function celebrate(){
-  // sound
   document.getElementById("popSound").play();
 
-  // ring box
   const box=document.getElementById("ringBox");
   box.style.display="block";
   setTimeout(()=>box.classList.add("open"),100);
 
-  // confetti
   for(let i=0;i<120;i++){
     const c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
     c.style.background=`hsl(${Math.random()*360},80%,60%)`;
-    c.style.animationDuration=(2+Math.random()*2)+"s";
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
   }
+
+  // FINAL PHOTO REVEAL
+  setTimeout(()=>{
+    document.getElementById("bg").style.opacity="0";
+    document.getElementById("finalPhoto").classList.add("show");
+  },3000);
 }
 </script>
 
