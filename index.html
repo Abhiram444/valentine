@@ -44,7 +44,7 @@ html,body{
 /* ===== SECTION ===== */
 .section{
   position:absolute;
-  max-width:720px;
+  max-width:760px;
   padding:0 12%;
   text-align:center;
   opacity:0;
@@ -60,14 +60,14 @@ html,body{
 /* ===== TEXT STYLES ===== */
 h1{
   font-family:'Playfair Display', serif;
-  font-size:clamp(42px,6vw,64px);
+  font-size:clamp(40px,6vw,64px);
   font-weight:400;
   margin-bottom:24px;
 }
 
 p{
   font-size:clamp(18px,3vw,22px);
-  line-height:1.7;
+  line-height:1.75;
   opacity:.85;
 }
 
@@ -92,25 +92,44 @@ p{
 <div class="bg"></div>
 
 <div class="site">
+
   <div class="section active">
-    <h1>It didn’t happen loudly.</h1>
-    <p>Some feelings don’t arrive with warnings.</p>
+    <h1>Tejashwini,</h1>
+    <p>this didn’t begin with a moment.<br>It began with time.</p>
   </div>
 
   <div class="section">
-    <h1>They grow.</h1>
-    <p>In ordinary moments. In shared silences.</p>
+    <h1>Somewhere between us,</h1>
+    <p>small things started to matter more than big plans.</p>
+  </div>
+
+  <div class="section">
+    <h1>I remember us,</h1>
+    <p>
+      in the quiet moments.<br>
+      in the laughs that didn’t need a reason.<br>
+      in <em>[our first long conversation]</em>.
+    </p>
   </div>
 
   <div class="section">
     <h1>With you,</h1>
-    <p>everything felt softer. Slower. Real.</p>
+    <p>
+      even <em>[ordinary days]</em> felt special.<br>
+      even <em>[silence]</em> felt comfortable.
+    </p>
+  </div>
+
+  <div class="section">
+    <h1>This isn’t just a feeling.</h1>
+    <p>It’s a choice I make, every day.</p>
   </div>
 
   <div class="section">
     <h1 class="final">This is my favourite story.</h1>
-    <p>And the ending I choose.</p>
+    <p>And the ending I choose — is you.</p>
   </div>
+
 </div>
 
 <script>
@@ -123,7 +142,8 @@ function showNext(){
   sections[current].classList.add("active");
 }
 
-setInterval(showNext, 4000); // feels like scrolling
+/* feels like scrolling, but cinematic */
+setInterval(showNext, 4200);
 </script>
 
 </body>
